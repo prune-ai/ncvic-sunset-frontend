@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { FormContainer } from "../components/layout/FormContainer";
-import { ButtonGroup } from "../components/ui/ButtonGroup";
 import { Button } from "../components/ui/Button";
 
 interface ContactInfoPageProps {
   onBack: () => void;
-  onNext: () => void;
+  onNext: (pageData: Record<string, unknown>) => void;
+  isLoading?: boolean;
+  error?: string;
 }
 
 const CheckIcon = () => (
@@ -166,12 +167,14 @@ const COUNTRIES = [
   "Ghana",
   "Greece",
   "Grenada",
+  "Guam",
   "Guatemala",
   "Guinea",
   "Guinea-Bissau",
   "Guyana",
   "Haiti",
   "Honduras",
+  "Hong Kong",
   "Hungary",
   "Iceland",
   "India",
@@ -199,6 +202,7 @@ const COUNTRIES = [
   "Liechtenstein",
   "Lithuania",
   "Luxembourg",
+  "Macau",
   "Madagascar",
   "Malawi",
   "Malaysia",
@@ -297,7 +301,12 @@ const COUNTRIES = [
   "Zimbabwe",
 ];
 
-export function ContactInfoPage({ onBack, onNext }: ContactInfoPageProps) {
+export function ContactInfoPage({
+  onBack,
+  onNext,
+  isLoading = false,
+  error,
+}: ContactInfoPageProps) {
   const [userLocation, setUserLocation] = useState({
     country: "",
     state: "",
@@ -380,11 +389,11 @@ export function ContactInfoPage({ onBack, onNext }: ContactInfoPageProps) {
 
   return (
     <FormContainer title="Start your case" currentStep={4} totalSteps={5}>
-      <div className="flex flex-col gap-[20px] w-full">
+      <div className="flex flex-col gap-4 lg:gap-[20px] w-full">
         {/* Where are you located? */}
-        <div className="flex flex-col gap-[16px] w-full">
+        <div className="flex flex-col gap-3 lg:gap-[16px] w-full">
           <div className="flex flex-col gap-2 w-full">
-            <h2 className="text-white text-lg font-semibold leading-[1.25]">
+            <h2 className="text-white text-base lg:text-lg font-semibold leading-[1.25]">
               Where are you located?
             </h2>
             <p className="text-white/80 text-xs font-medium leading-[1.25]">
@@ -402,7 +411,7 @@ export function ContactInfoPage({ onBack, onNext }: ContactInfoPageProps) {
                 className="w-full bg-gray-900/20 flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-900/30 transition-colors"
               >
                 <span className="text-xs font-medium text-white">
-                  {userLocation.country || "Country"}
+                  {userLocation.country || "Countries and Regions"}
                 </span>
                 <DropdownArrow />
               </button>
@@ -466,7 +475,7 @@ export function ContactInfoPage({ onBack, onNext }: ContactInfoPageProps) {
         </div>
 
         {/* Do you know where the person posting the content is located? */}
-        <div className="flex flex-col gap-[16px] w-full">
+        <div className="flex flex-col gap-3 lg:gap-[16px] w-full">
           <div className="flex flex-col gap-2 w-full">
             <h2 className="text-white text-lg font-semibold leading-[1.25] whitespace-pre-wrap">
               Do you know where the person posting the content is located?
@@ -529,7 +538,7 @@ export function ContactInfoPage({ onBack, onNext }: ContactInfoPageProps) {
                   className="w-full bg-gray-900/20 flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-900/30 transition-colors"
                 >
                   <span className="text-xs font-medium text-white">
-                    {perpetratorLocation.country || "Country"}
+                    {perpetratorLocation.country || "Countries and Regions"}
                   </span>
                   <DropdownArrow />
                 </button>
@@ -610,7 +619,7 @@ export function ContactInfoPage({ onBack, onNext }: ContactInfoPageProps) {
         </div>
 
         {/* Contact information */}
-        <div className="flex flex-col gap-[16px] w-full">
+        <div className="flex flex-col gap-3 lg:gap-[16px] w-full">
           <div className="flex flex-col gap-2 w-full">
             <h2 className="text-white text-lg font-semibold leading-[1.25] whitespace-pre-wrap">
               Please provide at least one safe way for us to reach you about
@@ -643,7 +652,7 @@ export function ContactInfoPage({ onBack, onNext }: ContactInfoPageProps) {
         </div>
 
         {/* Notification preferences */}
-        <div className="flex flex-col gap-[16px] w-full">
+        <div className="flex flex-col gap-3 lg:gap-[16px] w-full">
           <div className="flex flex-col gap-2 w-full">
             <h2 className="text-white text-lg font-semibold leading-[1.25] whitespace-pre-wrap">
               Notification preferences
@@ -693,7 +702,7 @@ export function ContactInfoPage({ onBack, onNext }: ContactInfoPageProps) {
         </div>
 
         {/* Who are you? */}
-        <div className="flex flex-col gap-[16px] w-full">
+        <div className="flex flex-col gap-3 lg:gap-[16px] w-full">
           <h2 className="text-white text-lg font-semibold leading-[1.25] whitespace-pre-wrap">
             Who are you?
           </h2>
@@ -749,10 +758,35 @@ export function ContactInfoPage({ onBack, onNext }: ContactInfoPageProps) {
         </div>
       </div>
 
+      {/* Error message */}
+      {error && <div className="text-red-400 text-sm mt-4">{error}</div>}
+
       {/* Navigation buttons */}
-      <div className="flex items-center justify-between w-full">
-        <Button onClick={onBack}>Back</Button>
-        <Button onClick={onNext}>Next</Button>
+      <div className="flex items-center justify-between gap-2 w-full mt-4">
+        <Button
+          onClick={onBack}
+          className="flex-1 lg:flex-none"
+          disabled={isLoading}
+        >
+          Back
+        </Button>
+        <Button
+          onClick={() => {
+            onNext({
+              user_location: userLocation,
+              knows_perpetrator_location: knowsPerpetratorLocation,
+              perpetrator_location: knowsPerpetratorLocation === "yes" ? perpetratorLocation : null,
+              contact_info: contactInfo,
+              notification_preferences: Array.from(notificationPreferences),
+              identity_preference: identityPreference,
+              name: identityPreference === "provideName" ? name : null,
+            });
+          }}
+          className="flex-1 lg:flex-none"
+          disabled={isLoading}
+        >
+          {isLoading ? "Saving..." : "Next"}
+        </Button>
       </div>
     </FormContainer>
   );

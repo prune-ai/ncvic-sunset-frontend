@@ -17,10 +17,10 @@ export function RadioOption({
     <button
       type="button"
       onClick={() => onChange(value)}
-      className={`w-full flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-semibold leading-[1.25] text-white transition-colors ${
+      className={`w-full flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-semibold leading-[1.25] text-white transition-colors min-h-[44px] ${
         selected
           ? "bg-[#b894ee] border border-[#b894ee]"
-          : "bg-gray-900/20 hover:bg-gray-900/30"
+          : "bg-gray-900/20 hover:bg-gray-900/30 active:opacity-75"
       }`}
       role="radio"
       aria-checked={selected}

@@ -29,7 +29,6 @@ export function Checkbox({
   onChange,
   label,
   description,
-  required = false,
 }: CheckboxProps) {
   return (
     <div className="border border-white/20 border-solid flex gap-2 items-start px-4 py-3 rounded-2xl w-full">

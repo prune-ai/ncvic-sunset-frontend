@@ -19,9 +19,9 @@ export function SuccessPage({
   };
 
   return (
-    <div className="backdrop-blur-[50px] backdrop-filter bg-gray-900/20 flex flex-col gap-[32px] items-center p-[32px] rounded-[12px] w-full">
+    <div className="backdrop-blur-[50px] backdrop-filter bg-gray-900/20 flex flex-col gap-6 lg:gap-[32px] items-center p-4 lg:p-[32px] rounded-[12px] w-full">
       {/* Success icon and text */}
-      <div className="flex flex-col gap-[12px] items-center w-full">
+      <div className="flex flex-col gap-3 lg:gap-[12px] items-center w-full">
         {/* Checkmark icon */}
         <div className="h-[60px] w-[69px] flex items-center justify-center relative">
           {/* Radiating dots effect */}
@@ -52,26 +52,26 @@ export function SuccessPage({
         </div>
 
         {/* Heading */}
-        <h1 className="text-white text-2xl font-semibold leading-[1.45] text-center">
+        <h1 className="text-white text-xl lg:text-2xl font-semibold leading-[1.45] text-center">
           Your case is created.
         </h1>
 
         {/* Description */}
-        <p className="text-white text-xs font-medium leading-[1.45] text-center max-w-md">
+        <p className="text-white text-xs font-medium leading-[1.45] text-center max-w-md px-2">
           You can now track takedowns, add evidence, upload more images, or
           request escalation.
         </p>
       </div>
 
       {/* Action buttons */}
-      <div className="flex flex-col gap-[8px] items-start w-full">
+      <div className="flex flex-col gap-2 lg:gap-[8px] items-start w-full">
         {/* Primary button */}
         <Button onClick={onGoToPortal} variant="primary" className="w-full">
           Go to your portal
         </Button>
 
         {/* Secondary buttons */}
-        <div className="flex gap-[8px] items-start w-full">
+        <div className="flex gap-2 lg:gap-[8px] items-start w-full">
           <Button
             onClick={onAddMoreEvidence}
             variant="secondary"

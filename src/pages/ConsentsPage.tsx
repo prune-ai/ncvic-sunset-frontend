@@ -1,15 +1,20 @@
 import { useState } from "react";
 import { FormContainer } from "../components/layout/FormContainer";
-import { FormPage } from "../components/layout/FormPage";
-import { Checkbox } from "../components/ui/Checkbox";
 import { Button } from "../components/ui/Button";
 
 interface ConsentsPageProps {
   onBack: () => void;
-  onSubmit: () => void;
+  onSubmit: (pageData: Record<string, unknown>) => void;
+  isLoading?: boolean;
+  error?: string;
 }
 
-export function ConsentsPage({ onBack, onSubmit }: ConsentsPageProps) {
+export function ConsentsPage({
+  onBack,
+  onSubmit,
+  isLoading = false,
+  error,
+}: ConsentsPageProps) {
   const [consents, setConsents] = useState({
     accurateInfo: false,
     hashingAnalysis: false,
@@ -23,16 +28,22 @@ export function ConsentsPage({ onBack, onSubmit }: ConsentsPageProps) {
 
   const handleSubmit = () => {
     if (allConsentsChecked) {
-      onSubmit();
+      onSubmit({
+        consents: {
+          accurate_info: consents.accurateInfo,
+          hashing_analysis: consents.hashingAnalysis,
+          takedown_requests: consents.takedownRequests,
+        },
+      });
     }
   };
 
   return (
     <FormContainer title="Start your case" currentStep={5} totalSteps={5}>
-      <div className="flex flex-col gap-[20px] w-full">
+      <div className="flex flex-col gap-4 lg:gap-[20px] w-full">
         {/* Consents section */}
         <div className="flex flex-col gap-2 w-full">
-          <h2 className="text-white text-lg font-semibold leading-[1.25]">
+          <h2 className="text-white text-base lg:text-lg font-semibold leading-[1.25]">
             Consents
           </h2>
           <p className="text-white/80 text-xs font-normal leading-[1.25]">
@@ -198,15 +209,25 @@ export function ConsentsPage({ onBack, onSubmit }: ConsentsPageProps) {
         </p>
       </div>
 
+      {/* Error message */}
+      {error && <div className="text-red-400 text-sm mt-4">{error}</div>}
+
       {/* Navigation buttons */}
-      <div className="flex items-center justify-between w-full">
-        <Button onClick={onBack}>Back</Button>
+      <div className="flex items-center justify-between gap-2 w-full mt-4">
+        <Button
+          onClick={onBack}
+          className="flex-1 lg:flex-none"
+          disabled={isLoading}
+        >
+          Back
+        </Button>
         <Button
           onClick={handleSubmit}
           variant="primary"
-          disabled={!allConsentsChecked}
+          disabled={!allConsentsChecked || isLoading}
+          className="flex-1 lg:flex-none"
         >
-          Submit & Create Case
+          {isLoading ? "Submitting..." : "Submit & Create Case"}
         </Button>
       </div>
     </FormContainer>

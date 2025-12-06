@@ -17,11 +17,11 @@ export function PageLayout({ children, backgroundImage }: PageLayoutProps) {
           />
         </div>
       )}
-      <div className="relative z-10 flex items-center justify-center h-screen p-4 pb-[100px]">
-        <div className="w-full max-w-[500px] py-8">{children}</div>
+      <div className="relative z-10 flex items-center justify-center h-screen p-4 pb-20 lg:pb-[100px]">
+        <div className="w-full max-w-[500px] py-4 lg:py-8">{children}</div>
       </div>
       <footer className="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center pt-[10px] pb-[30px]">
-        <div className="flex gap-[50px] items-center text-white text-[14px] font-medium leading-[1.25] whitespace-nowrap">
+        <div className="flex gap-4 lg:gap-[50px] items-center text-white text-xs lg:text-[14px] font-medium leading-[1.25] whitespace-nowrap px-4">
           <a
             href="#"
             className="hover:text-[#8be784] transition-colors cursor-pointer"

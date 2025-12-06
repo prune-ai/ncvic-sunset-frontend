@@ -1,4 +1,3 @@
-import { Button } from "../components/ui/Button";
 
 interface LandingPageProps {
   onStartCase: () => void;
@@ -18,18 +17,40 @@ export function LandingPage({ onStartCase, onLearnMore }: LandingPageProps) {
       </div>
 
       {/* Header with logo */}
-      <header className="absolute top-0 left-0 right-0 z-20 backdrop-blur-sm backdrop-filter flex items-center justify-between px-[150px] py-[10px]">
+      <header className="absolute top-0 left-0 right-0 z-20 backdrop-blur-sm backdrop-filter flex items-center justify-between px-4 lg:px-[150px] py-[10px]">
         <div className="h-[40px] w-[140px] flex items-center">
           {/* Logo placeholder - replace with actual logo image */}
           <div className="h-[35px] w-[70px] bg-white/20 rounded flex items-center justify-center">
             <span className="text-white text-xs font-semibold">NCMEC</span>
           </div>
         </div>
+        {/* Hamburger menu icon - mobile only */}
+        <button
+          className="lg:hidden w-6 h-6 flex items-center justify-center"
+          aria-label="Menu"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="text-white"
+          >
+            <path
+              d="M3 12H21M3 6H21M3 18H21"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
       </header>
 
       {/* Footer */}
       <footer className="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center pt-[10px] pb-[30px]">
-        <div className="flex gap-[50px] items-center text-white text-[14px] font-medium leading-[1.25] whitespace-nowrap">
+        <div className="flex gap-4 lg:gap-[50px] items-center text-white text-[14px] font-medium leading-[1.25] whitespace-nowrap">
           <a
             href="#"
             className="hover:text-[#8be784] transition-colors cursor-pointer"
@@ -51,15 +72,15 @@ export function LandingPage({ onStartCase, onLearnMore }: LandingPageProps) {
         </div>
       </footer>
 
-      {/* Main content - positioned 1/5 from left, vertically centered */}
-      <div className="absolute left-[20%] top-1/2 -translate-y-1/2 z-10">
-        <div className="flex flex-col gap-[48px] items-start w-[882px]">
+      {/* Main content - centered on mobile, left-aligned on desktop */}
+      <div className="absolute left-1/2 lg:left-[20%] top-1/2 -translate-x-1/2 lg:translate-x-0 -translate-y-1/2 z-10 w-full max-w-[390px] lg:max-w-none px-4 lg:px-0">
+        <div className="flex flex-col gap-12 lg:gap-[48px] items-center lg:items-start w-full lg:w-[882px]">
           {/* Title and description */}
-          <div className="flex flex-col gap-[24px] items-start text-white w-full">
-            <h1 className="text-[80px] font-semibold leading-[1.05] whitespace-pre-wrap landing-title-shadow w-[461px]">
+          <div className="flex flex-col gap-6 lg:gap-[24px] items-center lg:items-start text-white w-full">
+            <h1 className="text-[60px] lg:text-[80px] font-semibold leading-[1.05] whitespace-pre-wrap landing-title-shadow w-full lg:w-[461px] text-center lg:text-left">
               Welcome to Sunset.
             </h1>
-            <p className="text-[20px] font-normal leading-[1.5] whitespace-pre-wrap w-[882px]">
+            <p className="text-[16px] lg:text-[20px] font-normal leading-[1.5] whitespace-pre-wrap w-full lg:w-[882px] text-center lg:text-left">
               We help remove sexual images shared without consent. Our team
               provides free content-removal services, evidence preservation,
               legal referrals, and escalation to law enforcement. Start a case
@@ -68,10 +89,10 @@ export function LandingPage({ onStartCase, onLearnMore }: LandingPageProps) {
           </div>
 
           {/* Action buttons */}
-          <div className="flex gap-[24px] items-center">
+          <div className="flex gap-6 lg:gap-[24px] items-center w-full">
             <button
               onClick={onStartCase}
-              className="bg-[#8be784] flex gap-[8px] items-center justify-center px-[32px] py-[16px] rounded-[12px] shadow-[6px_6px_0px_0px_#d09fba] hover:opacity-90 transition-opacity cursor-pointer"
+              className="bg-[#8be784] flex flex-1 lg:flex-none gap-[8px] items-center justify-center px-[32px] py-[16px] rounded-[12px] shadow-[6px_6px_0px_0px_#d09fba] hover:opacity-90 active:opacity-75 transition-opacity cursor-pointer min-h-[44px]"
             >
               <span className="text-[14px] font-semibold leading-[1.25] text-center text-gray-900 whitespace-nowrap">
                 Start My Case
@@ -79,7 +100,7 @@ export function LandingPage({ onStartCase, onLearnMore }: LandingPageProps) {
             </button>
             <button
               onClick={onLearnMore}
-              className="bg-[#b894ee] flex gap-[8px] items-center justify-center px-[32px] py-[16px] rounded-[12px] shadow-[6px_6px_0px_0px_#8be784] hover:opacity-90 transition-opacity cursor-pointer"
+              className="bg-[#b894ee] flex flex-1 lg:flex-none gap-[8px] items-center justify-center px-[32px] py-[16px] rounded-[12px] shadow-[6px_6px_0px_0px_#8be784] hover:opacity-90 active:opacity-75 transition-opacity cursor-pointer min-h-[44px]"
             >
               <span className="text-[14px] font-semibold leading-[1.25] text-center text-white whitespace-nowrap">
                 Learn More

@@ -20,7 +20,7 @@ export function TextInput({
   rows = 3,
 }: TextInputProps) {
   const baseStyles =
-    "w-full px-4 py-3 rounded-2xl border border-white/20 bg-white/5 text-white text-sm placeholder:text-white/40 focus:outline-none focus:border-[#8be784] transition-colors";
+    "w-full px-4 py-3 rounded-2xl border border-white/20 bg-white/5 text-white text-sm placeholder:text-white/40 focus:outline-none focus:border-[#8be784] transition-colors min-h-[44px]";
 
   return (
     <div className="flex flex-col gap-2 w-full">

@@ -5,7 +5,9 @@ import { Button } from "../components/ui/Button";
 
 interface WhatHappenedPageProps {
   onBack: () => void;
-  onNext: () => void;
+  onNext: (pageData: Record<string, unknown>) => void;
+  isLoading?: boolean;
+  error?: string;
 }
 
 const CheckIcon = () => (
@@ -26,7 +28,12 @@ const CheckIcon = () => (
   </svg>
 );
 
-export function WhatHappenedPage({ onBack, onNext }: WhatHappenedPageProps) {
+export function WhatHappenedPage({
+  onBack,
+  onNext,
+  isLoading = false,
+  error,
+}: WhatHappenedPageProps) {
   const [whatHappened, setWhatHappened] = useState<Set<string>>(new Set());
   const [knowsWhoPosted, setKnowsWhoPosted] = useState<string | null>(null);
   const [whoPosted, setWhoPosted] = useState<Set<string>>(new Set());
@@ -53,10 +60,10 @@ export function WhatHappenedPage({ onBack, onNext }: WhatHappenedPageProps) {
 
   return (
     <FormContainer title="Start your case" currentStep={2} totalSteps={5}>
-      <div className="flex flex-col gap-[20px] w-full">
+      <div className="flex flex-col gap-4 lg:gap-[20px] w-full">
         {/* What happened? */}
-        <div className="flex flex-col gap-[16px] w-full">
-          <h2 className="text-white text-lg font-semibold leading-[1.25] whitespace-pre-wrap">
+        <div className="flex flex-col gap-3 lg:gap-[16px] w-full">
+          <h2 className="text-white text-base lg:text-lg font-semibold leading-[1.25] whitespace-pre-wrap">
             What happened?
           </h2>
           <div className="flex flex-col gap-0 w-full">
@@ -244,8 +251,8 @@ export function WhatHappenedPage({ onBack, onNext }: WhatHappenedPageProps) {
         </div>
 
         {/* Do you know who posted or shared the content? */}
-        <div className="flex flex-col gap-[16px] w-full">
-          <h2 className="text-white text-lg font-semibold leading-[1.25]">
+        <div className="flex flex-col gap-3 lg:gap-[16px] w-full">
+          <h2 className="text-white text-base lg:text-lg font-semibold leading-[1.25]">
             Do you know who posted or shared the content?
           </h2>
           <ButtonGroup
@@ -410,10 +417,31 @@ export function WhatHappenedPage({ onBack, onNext }: WhatHappenedPageProps) {
         </div>
       </div>
 
+      {/* Error message */}
+      {error && <div className="text-red-400 text-sm mt-4">{error}</div>}
+
       {/* Navigation buttons */}
-      <div className="flex items-center justify-between w-full">
-        <Button onClick={onBack}>Back</Button>
-        <Button onClick={onNext}>Next</Button>
+      <div className="flex items-center justify-between gap-2 w-full mt-4">
+        <Button
+          onClick={onBack}
+          className="flex-1 lg:flex-none"
+          disabled={isLoading}
+        >
+          Back
+        </Button>
+        <Button
+          onClick={() => {
+            onNext({
+              what_happened: Array.from(whatHappened),
+              knows_who_posted: knowsWhoPosted,
+              who_posted: knowsWhoPosted === "yes" ? Array.from(whoPosted) : null,
+            });
+          }}
+          className="flex-1 lg:flex-none"
+          disabled={isLoading || whatHappened.size === 0 || !knowsWhoPosted}
+        >
+          {isLoading ? "Saving..." : "Next"}
+        </Button>
       </div>
     </FormContainer>
   );

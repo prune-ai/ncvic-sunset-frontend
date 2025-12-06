@@ -4,7 +4,9 @@ import { Button } from "../components/ui/Button";
 
 interface AddEvidencePageProps {
   onBack: () => void;
-  onNext: () => void;
+  onNext: (pageData: Record<string, unknown>) => void;
+  isLoading?: boolean;
+  error?: string;
 }
 
 interface UploadedFile {
@@ -68,7 +70,12 @@ const UploadIcon = () => (
   </svg>
 );
 
-export function AddEvidencePage({ onBack, onNext }: AddEvidencePageProps) {
+export function AddEvidencePage({
+  onBack,
+  onNext,
+  isLoading = false,
+  error,
+}: AddEvidencePageProps) {
   const [activeTab, setActiveTab] = useState<"images" | "urls" | "text">(
     "images",
   );
@@ -127,19 +134,19 @@ export function AddEvidencePage({ onBack, onNext }: AddEvidencePageProps) {
 
   return (
     <FormContainer title="Start your case" currentStep={3} totalSteps={5}>
-      <div className="flex flex-col gap-[20px] w-full">
+      <div className="flex flex-col gap-4 lg:gap-[20px] w-full">
         {/* Add evidence section */}
-        <div className="flex flex-col gap-[16px] w-full">
-          <h2 className="text-white text-lg font-semibold leading-[1.25]">
+        <div className="flex flex-col gap-3 lg:gap-[16px] w-full">
+          <h2 className="text-white text-base lg:text-lg font-semibold leading-[1.25]">
             Add evidence
           </h2>
 
           {/* Tabs */}
-          <div className="flex gap-[8px] w-full">
+          <div className="flex gap-1 lg:gap-[8px] w-full">
             <button
               type="button"
               onClick={() => setActiveTab("images")}
-              className={`flex-1 flex items-center justify-center px-4 py-3 rounded-lg text-sm font-semibold leading-[1.25] text-white transition-colors ${
+              className={`flex-1 flex items-center justify-center px-2 lg:px-4 py-2.5 lg:py-3 rounded-lg text-xs lg:text-sm font-semibold leading-[1.25] text-white transition-colors min-h-[44px] ${
                 activeTab === "images"
                   ? "bg-[#b894ee] border border-[#b894ee]"
                   : "bg-gray-900/20 hover:bg-gray-900/30"
@@ -150,7 +157,7 @@ export function AddEvidencePage({ onBack, onNext }: AddEvidencePageProps) {
             <button
               type="button"
               onClick={() => setActiveTab("urls")}
-              className={`flex-1 flex items-center justify-center px-4 py-3 rounded-lg text-sm font-semibold leading-[1.25] text-white transition-colors ${
+              className={`flex-1 flex items-center justify-center px-2 lg:px-4 py-2.5 lg:py-3 rounded-lg text-xs lg:text-sm font-semibold leading-[1.25] text-white transition-colors min-h-[44px] ${
                 activeTab === "urls"
                   ? "bg-[#b894ee] border border-[#b894ee]"
                   : "bg-gray-900/20 hover:bg-gray-900/30"
@@ -161,7 +168,7 @@ export function AddEvidencePage({ onBack, onNext }: AddEvidencePageProps) {
             <button
               type="button"
               onClick={() => setActiveTab("text")}
-              className={`flex-1 flex items-center justify-center px-4 py-3 rounded-lg text-sm font-semibold leading-[1.25] text-white transition-colors ${
+              className={`flex-1 flex items-center justify-center px-2 lg:px-4 py-2.5 lg:py-3 rounded-lg text-xs lg:text-sm font-semibold leading-[1.25] text-white transition-colors min-h-[44px] ${
                 activeTab === "text"
                   ? "bg-[#b894ee] border border-[#b894ee]"
                   : "bg-gray-900/20 hover:bg-gray-900/30"
@@ -175,7 +182,7 @@ export function AddEvidencePage({ onBack, onNext }: AddEvidencePageProps) {
           {activeTab === "images" && (
             <>
               <div
-                className={`bg-white/8 border border-dashed border-white flex flex-col gap-4 items-center justify-center p-6 rounded-[20px] w-full transition-colors ${
+                className={`bg-white/8 border border-dashed border-white flex flex-col gap-3 lg:gap-4 items-center justify-center p-4 lg:p-6 rounded-[20px] w-full transition-colors ${
                   isDragging ? "border-[#b894ee] bg-white/12" : ""
                 }`}
                 onDragOver={handleDragOver}
@@ -293,11 +300,11 @@ export function AddEvidencePage({ onBack, onNext }: AddEvidencePageProps) {
           )}
 
           {/* Action cards */}
-          <div className="flex gap-2 w-full">
+          <div className="flex flex-col sm:flex-row gap-2 w-full">
             <button
               type="button"
               onClick={() => setActionType("remove")}
-              className={`flex-1 flex flex-col gap-2 items-center px-4 py-3 rounded-xl transition-colors ${
+              className={`flex-1 flex flex-col gap-2 items-center px-3 lg:px-4 py-3 rounded-xl transition-colors min-h-[44px] ${
                 actionType === "remove"
                   ? "bg-[#b894ee]"
                   : "bg-[#88758e] hover:bg-[#9a7fa1]"
@@ -324,7 +331,7 @@ export function AddEvidencePage({ onBack, onNext }: AddEvidencePageProps) {
             <button
               type="button"
               onClick={() => setActionType("search")}
-              className={`flex-1 flex flex-col gap-2 items-center px-4 py-3 rounded-xl transition-colors ${
+              className={`flex-1 flex flex-col gap-2 items-center px-3 lg:px-4 py-3 rounded-xl transition-colors min-h-[44px] ${
                 actionType === "search"
                   ? "bg-[#b894ee]"
                   : "bg-[#88758e] hover:bg-[#9a7fa1]"
@@ -353,10 +360,35 @@ export function AddEvidencePage({ onBack, onNext }: AddEvidencePageProps) {
         </div>
       </div>
 
+      {/* Error message */}
+      {error && <div className="text-red-400 text-sm mt-4">{error}</div>}
+
       {/* Navigation buttons */}
-      <div className="flex items-center justify-between w-full">
-        <Button onClick={onBack}>Back</Button>
-        <Button onClick={onNext}>Next</Button>
+      <div className="flex items-center justify-between gap-2 w-full mt-4">
+        <Button
+          onClick={onBack}
+          className="flex-1 lg:flex-none"
+          disabled={isLoading}
+        >
+          Back
+        </Button>
+        <Button
+          onClick={() => {
+            // For now, just pass basic evidence data
+            // File uploads will be handled separately when backend supports it
+            onNext({
+              evidence_type: activeTab,
+              action_type: actionType,
+              files_count: uploadedFiles.length,
+              // Note: Actual file uploads will need to be handled via FormData
+              // when the backend file upload endpoint is ready
+            });
+          }}
+          className="flex-1 lg:flex-none"
+          disabled={isLoading}
+        >
+          {isLoading ? "Saving..." : "Next"}
+        </Button>
       </div>
     </FormContainer>
   );

@@ -16,7 +16,7 @@ export function Button({
   className = "",
 }: ButtonProps) {
   const baseStyles =
-    "flex gap-2 items-center px-[24px] py-[14px] rounded-lg transition-opacity";
+    "flex gap-2 items-center px-4 lg:px-[24px] py-3 lg:py-[14px] rounded-lg transition-opacity min-h-[44px]";
   const variantStyles = {
     primary: "bg-[#8be784] text-gray-900",
     secondary: "bg-gray-900/20 text-white",
@@ -28,7 +28,9 @@ export function Button({
       onClick={onClick}
       disabled={disabled}
       className={`${baseStyles} ${variantStyles[variant]} ${
-        disabled ? "opacity-50 cursor-not-allowed" : "hover:opacity-90"
+        disabled
+          ? "opacity-50 cursor-not-allowed"
+          : "hover:opacity-90 active:opacity-75"
       } ${className}`}
     >
       <span className="text-sm font-semibold leading-[1.25] text-center whitespace-nowrap">
