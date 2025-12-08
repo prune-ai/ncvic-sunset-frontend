@@ -2,7 +2,10 @@
  * API client for NCVIC Sunset Backend
  */
 
-const API_BASE_URL = "https://nc-aa1a0762ed8b46afb47bd598909d279e.ecs.us-west-2.on.aws";
+// Use environment variable if set, otherwise default to production
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://nc-aa1a0762ed8b46afb47bd598909d279e.ecs.us-west-2.on.aws";
 
 export interface ApiError {
   detail: string;
@@ -65,6 +68,19 @@ export interface SubmitIntakeResponse {
   case_id: string;
   case_number: string;
   survivor_id: string;
+}
+
+export interface EvidenceResponse {
+  id: string;
+  intake_form_id: string;
+  evidence_type: string;
+  action_type: string;
+  file_path: string | null;
+  file_name: string | null;
+  url: string | null;
+  text_content: string | null;
+  thumbnail_path: string | null;
+  created_at: string;
 }
 
 export const api = {
@@ -132,6 +148,79 @@ export const api = {
     );
 
     return handleResponse<SubmitIntakeResponse>(response);
+  },
+
+  /**
+   * Upload a file as evidence
+   */
+  async uploadEvidenceFile(
+    formId: string,
+    file: File,
+    actionType: "remove" | "search",
+  ): Promise<EvidenceResponse> {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("action_type", actionType);
+
+    const response = await fetch(
+      `${API_BASE_URL}/api/intake/${formId}/evidence/upload`,
+      {
+        method: "POST",
+        body: formData,
+      },
+    );
+
+    return handleResponse<EvidenceResponse>(response);
+  },
+
+  /**
+   * Create URL evidence
+   */
+  async createUrlEvidence(
+    formId: string,
+    urls: string[],
+    actionType: "remove" | "search" = "remove",
+  ): Promise<EvidenceResponse[]> {
+    const response = await fetch(
+      `${API_BASE_URL}/api/intake/${formId}/evidence/urls`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          urls,
+          action_type: actionType,
+        }),
+      },
+    );
+
+    return handleResponse<EvidenceResponse[]>(response);
+  },
+
+  /**
+   * Create text/keyword evidence
+   */
+  async createTextEvidence(
+    formId: string,
+    keywords: string[],
+    actionType: "remove" | "search" = "search",
+  ): Promise<EvidenceResponse[]> {
+    const response = await fetch(
+      `${API_BASE_URL}/api/intake/${formId}/evidence/text`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          keywords,
+          action_type: actionType,
+        }),
+      },
+    );
+
+    return handleResponse<EvidenceResponse[]>(response);
   },
 };
 

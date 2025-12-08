@@ -1,4 +1,6 @@
 import { Button } from "../components/ui/Button";
+import { FooterLink } from "../components/ui/FooterLink";
+import { VideoBackground } from "../components/ui/VideoBackground";
 
 interface LandingPageProps {
   onStartCase: () => void;
@@ -8,12 +10,11 @@ interface LandingPageProps {
 export function LandingPage({ onStartCase, onLearnMore }: LandingPageProps) {
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      {/* Background image */}
+      {/* Background video */}
       <div className="absolute inset-0 -left-[596px] w-[2632px] h-[1755px]">
-        <img
-          src="/clouds.png"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        <VideoBackground
+          videoSrc="/cloudsloop.mov"
+          posterSrc="/clouds.png"
         />
       </div>
 
@@ -46,24 +47,9 @@ export function LandingPage({ onStartCase, onLearnMore }: LandingPageProps) {
       {/* Footer */}
       <footer className="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center pt-[10px] pb-[30px]">
         <div className="flex gap-4 lg:gap-[50px] items-center text-white text-[14px] font-medium leading-[1.25] whitespace-nowrap">
-          <a
-            href="#"
-            className="hover:text-[#8be784] transition-colors cursor-pointer"
-          >
-            Privacy Policy
-          </a>
-          <a
-            href="#"
-            className="hover:text-[#8be784] transition-colors cursor-pointer"
-          >
-            Terms
-          </a>
-          <a
-            href="#"
-            className="hover:text-[#8be784] transition-colors cursor-pointer"
-          >
-            Main Site
-          </a>
+          <FooterLink>Privacy Policy</FooterLink>
+          <FooterLink>Terms</FooterLink>
+          <FooterLink>Main Site</FooterLink>
         </div>
       </footer>
 

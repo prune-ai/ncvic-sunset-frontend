@@ -59,6 +59,27 @@ export function ContactInfoPage({
     email: savedContactInfo.email || "",
     phone: savedContactInfo.phone || "",
   });
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+  const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
+
+  // Email validation: check for @ and .
+  const validateEmail = (email: string): boolean => {
+    if (!email.trim()) return true; // Empty is valid (optional field)
+    return email.includes("@") && email.includes(".");
+  };
+
+  // Phone validation: minimum 10 digits
+  const validatePhone = (phone: string): boolean => {
+    if (!phone.trim()) return true; // Empty is valid (optional field)
+    const digitsOnly = phone.replace(/\D/g, "");
+    return digitsOnly.length >= 10;
+  };
+
+  // Normalize phone: extract digits only, keep as string
+  const normalizePhone = (phone: string): string => {
+    return phone.replace(/\D/g, "");
+  };
   const [notificationPreferences, setNotificationPreferences] = useState<
     Set<string>
   >(new Set((initialData?.notification_preferences as string[]) || []));
@@ -185,24 +206,38 @@ export function ContactInfoPage({
             description="You can choose email or phone — whichever feels safest for you."
           />
           <div className="flex flex-col gap-2 w-full">
-            <input
-              type="email"
-              placeholder="Email"
-              value={contactInfo.email}
-              onChange={(e) =>
-                setContactInfo({ ...contactInfo, email: e.target.value })
-              }
-              className="bg-gray-900/20 px-3 py-3 rounded-lg text-xs font-medium text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#b894ee]"
-            />
-            <input
-              type="tel"
-              placeholder="Phone"
-              value={contactInfo.phone}
-              onChange={(e) =>
-                setContactInfo({ ...contactInfo, phone: e.target.value })
-              }
-              className="bg-gray-900/20 px-3 py-3 rounded-lg text-xs font-medium text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#b894ee]"
-            />
+            <div className="flex flex-col gap-1">
+              <input
+                type="email"
+                placeholder="Email"
+                value={contactInfo.email}
+                onChange={(e) =>
+                  setContactInfo({ ...contactInfo, email: e.target.value })
+                }
+                className="bg-gray-900/20 px-3 py-3 rounded-lg text-xs font-medium text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#b894ee]"
+              />
+              {hasAttemptedSubmit && emailError && (
+                <p className="text-red-400 text-xs font-normal px-2 py-1 rounded bg-black/50">
+                  {emailError}
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col gap-1">
+              <input
+                type="tel"
+                placeholder="Phone"
+                value={contactInfo.phone}
+                onChange={(e) =>
+                  setContactInfo({ ...contactInfo, phone: e.target.value })
+                }
+                className="bg-gray-900/20 px-3 py-3 rounded-lg text-xs font-medium text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#b894ee]"
+              />
+              {hasAttemptedSubmit && phoneError && (
+                <p className="text-red-400 text-xs font-normal px-2 py-1 rounded bg-black/50">
+                  {phoneError}
+                </p>
+              )}
+            </div>
           </div>
         </div>
 
@@ -261,12 +296,44 @@ export function ContactInfoPage({
       <FormNavigation
         onBack={onBack}
         onNext={() => {
+          // Validate on submit attempt
+          setHasAttemptedSubmit(true);
+          
+          const emailValid = validateEmail(contactInfo.email);
+          const phoneValid = validatePhone(contactInfo.phone);
+          
+          // Set errors if validation fails
+          if (contactInfo.email.trim() && !emailValid) {
+            setEmailError("Please enter a valid email address");
+          } else {
+            setEmailError(null);
+          }
+          
+          if (contactInfo.phone.trim() && !phoneValid) {
+            setPhoneError("Phone number must be at least 10 digits");
+          } else {
+            setPhoneError(null);
+          }
+          
+          // Don't proceed if validation fails
+          if (
+            (contactInfo.email.trim() && !emailValid) ||
+            (contactInfo.phone.trim() && !phoneValid)
+          ) {
+            return;
+          }
+          
+          // Normalize phone number before sending
+          const normalizedContactInfo = {
+            ...contactInfo,
+            phone: contactInfo.phone ? normalizePhone(contactInfo.phone) : "",
+          };
           onNext({
             user_location: userLocation,
             knows_perpetrator_location: knowsPerpetratorLocation,
             perpetrator_location:
               knowsPerpetratorLocation === "yes" ? perpetratorLocation : null,
-            contact_info: contactInfo,
+            contact_info: normalizedContactInfo,
             notification_preferences: Array.from(notificationPreferences),
             identity_preference: identityPreference,
             name: identityPreference === "provideName" ? name : null,

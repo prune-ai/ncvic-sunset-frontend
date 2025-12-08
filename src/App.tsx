@@ -7,6 +7,7 @@ import { AddEvidencePage } from "./pages/AddEvidencePage";
 import { ContactInfoPage } from "./pages/ContactInfoPage";
 import { ConsentsPage } from "./pages/ConsentsPage";
 import { SuccessPage } from "./pages/SuccessPage";
+import { ConfirmModal } from "./components/ui/ConfirmModal";
 import { api, ApiClientError } from "./lib/api";
 
 function App() {
@@ -18,6 +19,15 @@ function App() {
   const [error, setError] = useState<string | undefined>(undefined);
   // Store form data for each page to restore on back navigation
   const [savedPageData, setSavedPageData] = useState<Record<number, Record<string, unknown>>>({});
+  // Store File objects separately for page 3 (evidence) since they can't be serialized
+  const [evidenceFiles, setEvidenceFiles] = useState<{
+    removeFiles: Array<{ id: string; file: File; preview: string }>;
+    searchFiles: Array<{ id: string; file: File; preview: string }>;
+  }>({
+    removeFiles: [],
+    searchFiles: [],
+  });
+  const [showStartOverModal, setShowStartOverModal] = useState(false);
 
   const handleStartCase = async () => {
     setCurrentPage(1); // Navigate to page 1 of the form immediately
@@ -42,6 +52,12 @@ function App() {
           ...prev,
           [currentPage]: pageData,
         }));
+
+        // For page 3 (evidence), also update evidence files if metadata exists
+        if (currentPage === 3 && pageData.remove_files && pageData.search_files) {
+          // Files are already stored in evidenceFiles state, so we don't need to restore them
+          // The metadata is saved for reference, but File objects persist in state
+        }
       }
 
       // If we're on page 1, start the intake form
@@ -55,6 +71,9 @@ function App() {
         });
         setFormId(response.id);
       } else if (formId && pageData && currentPage >= 2) {
+        // Note: File uploads for page 3 are handled directly in AddEvidencePage
+        // before onNext is called, so we don't need to handle them here
+        
         // Save page data for pages 2-5
         await api.savePage(formId, currentPage, pageData);
       }
@@ -126,6 +145,30 @@ function App() {
     console.log("Learn more");
   };
 
+  const handleStartOverClick = () => {
+    setShowStartOverModal(true);
+  };
+
+  const handleStartOverConfirm = () => {
+    // Clear all form state
+    setFormId(undefined);
+    setCaseId(undefined);
+    setCaseNumber(undefined);
+    setSavedPageData({});
+    setEvidenceFiles({
+      removeFiles: [],
+      searchFiles: [],
+    });
+    setError(undefined);
+    setShowStartOverModal(false);
+    // Navigate back to page 1
+    setCurrentPage(1);
+  };
+
+  const handleStartOverCancel = () => {
+    setShowStartOverModal(false);
+  };
+
   const renderPage = () => {
     switch (currentPage) {
       case 0:
@@ -163,6 +206,9 @@ function App() {
             isLoading={isLoading}
             error={error}
             initialData={savedPageData[3]}
+            evidenceFiles={evidenceFiles}
+            onEvidenceFilesChange={setEvidenceFiles}
+            formId={formId}
           />
         );
       case 4:
@@ -209,7 +255,26 @@ function App() {
     return renderPage();
   }
 
-  return <PageLayout backgroundImage="/clouds.png">{renderPage()}</PageLayout>;
+  return (
+    <>
+      <PageLayout
+        backgroundImage="/clouds.png"
+        backgroundVideo="/cloudsloop.mov"
+        onStartOver={handleStartOverClick}
+      >
+        {renderPage()}
+      </PageLayout>
+      <ConfirmModal
+        isOpen={showStartOverModal}
+        onClose={handleStartOverCancel}
+        onConfirm={handleStartOverConfirm}
+        title="Start Over"
+        message="Would you like to discard all your selections and start from the beginning?"
+        confirmLabel="Start Over"
+        cancelLabel="Cancel"
+      />
+    </>
+  );
 }
 
 export default App;

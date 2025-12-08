@@ -18,7 +18,7 @@ export function Button({
   const baseStyles =
     "flex gap-2 items-center px-4 lg:px-[24px] py-3 lg:py-[14px] rounded-lg transition-opacity min-h-[44px]";
   const variantStyles = {
-    primary: "bg-[#8be784] text-gray-900",
+    primary: "bg-[#8be784] text-white",
     secondary: "bg-gray-900/20 text-white",
   };
 

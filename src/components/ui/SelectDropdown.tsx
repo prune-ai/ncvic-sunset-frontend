@@ -172,17 +172,24 @@ export function SelectDropdown({
       {isOpen && (
         <div className="absolute z-10 mt-1 w-full bg-gray-900/95 border border-white/20 rounded-lg max-h-[200px] overflow-y-auto custom-scrollbar">
           {filteredOptions.length > 0 ? (
-            filteredOptions.map((option) => (
-              <button
-                key={option}
-                type="button"
-                onMouseDown={(e) => handleOptionSelect(e, option)}
-                onKeyDown={(e) => handleOptionSelect(e, option)}
-                className="w-full text-left px-3 py-2 text-xs font-medium text-white hover:bg-gray-800 transition-colors"
-              >
-                {option}
-              </button>
-            ))
+            filteredOptions.map((option) => {
+              const isSelected = option === displayValue;
+              return (
+                <button
+                  key={option}
+                  type="button"
+                  onMouseDown={(e) => handleOptionSelect(e, option)}
+                  onKeyDown={(e) => handleOptionSelect(e, option)}
+                  className={`w-full text-left px-3 py-2 text-xs font-medium text-white transition-colors ${
+                    isSelected
+                      ? "bg-[#b894ee]/30 hover:bg-[#b894ee]/40"
+                      : "hover:bg-gray-800"
+                  }`}
+                >
+                  {option}
+                </button>
+              );
+            })
           ) : (
             <div className="px-3 py-2 text-xs font-medium text-white/60">
               No matches found

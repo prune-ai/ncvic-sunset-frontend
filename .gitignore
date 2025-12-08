@@ -24,3 +24,4 @@ worker.js
 *.njsproj
 *.sln
 *.sw?
+.env

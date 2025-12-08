@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FormContainer } from "../components/layout/FormContainer";
 import { FormNavigation } from "../components/layout/FormNavigation";
 import { ErrorMessage } from "../components/ui/ErrorMessage";
@@ -11,6 +11,7 @@ import {
 import { TextUploadArea } from "../components/ui/TextUploadArea";
 import { URLUploadArea } from "../components/ui/URLUploadArea";
 import { WarningIcon, SearchIcon } from "../components/ui/icons";
+import { api } from "../lib/api";
 
 interface AddEvidencePageProps {
   onBack: () => void;
@@ -18,6 +19,15 @@ interface AddEvidencePageProps {
   isLoading?: boolean;
   error?: string;
   initialData?: Record<string, unknown>;
+  evidenceFiles: {
+    removeFiles: UploadedFile[];
+    searchFiles: UploadedFile[];
+  };
+  onEvidenceFilesChange: (files: {
+    removeFiles: UploadedFile[];
+    searchFiles: UploadedFile[];
+  }) => void;
+  formId?: string;
 }
 
 export function AddEvidencePage({
@@ -26,18 +36,39 @@ export function AddEvidencePage({
   isLoading = false,
   error,
   initialData,
+  evidenceFiles,
+  onEvidenceFilesChange,
+  formId,
 }: AddEvidencePageProps) {
   const [activeTab, setActiveTab] = useState<"images" | "urls" | "text">(
     (initialData?.evidence_type as "images" | "urls" | "text") || "images",
   );
-  const [removeFiles, setRemoveFiles] = useState<UploadedFile[]>([]);
-  const [searchFiles, setSearchFiles] = useState<UploadedFile[]>([]);
+  const [removeFiles, setRemoveFiles] = useState<UploadedFile[]>(
+    evidenceFiles.removeFiles || [],
+  );
+  const [searchFiles, setSearchFiles] = useState<UploadedFile[]>(
+    evidenceFiles.searchFiles || [],
+  );
   const [textKeywords, setTextKeywords] = useState<string[]>(
     (initialData?.text_keywords as string[]) || [],
   );
   const [urls, setUrls] = useState<string[]>(
     (initialData?.urls as string[]) || [],
   );
+
+  // Sync local file state with parent state
+  useEffect(() => {
+    setRemoveFiles(evidenceFiles.removeFiles || []);
+    setSearchFiles(evidenceFiles.searchFiles || []);
+  }, [evidenceFiles]);
+
+  // Update parent state when files change
+  useEffect(() => {
+    onEvidenceFilesChange({
+      removeFiles,
+      searchFiles,
+    });
+  }, [removeFiles, searchFiles, onEvidenceFilesChange]);
 
   const handleRemoveFilesSelected = (files: FileList) => {
     const newFiles: UploadedFile[] = Array.from(files).map((file) => {
@@ -153,17 +184,90 @@ export function AddEvidencePage({
 
       <FormNavigation
         onBack={onBack}
-        onNext={() => {
-          // For now, just pass basic evidence data
-          // File uploads will be handled separately when backend supports it
+        onNext={async () => {
+          // Upload files if formId is available
+          if (formId) {
+            console.log(`[AddEvidencePage] Uploading files for form ${formId}`);
+            console.log(`[AddEvidencePage] Remove files: ${removeFiles.length}, Search files: ${searchFiles.length}`);
+
+            // Upload remove files
+            for (const uploadedFile of removeFiles) {
+              try {
+                console.log(`[AddEvidencePage] Uploading remove file: ${uploadedFile.file.name}`);
+                await api.uploadEvidenceFile(formId, uploadedFile.file, "remove");
+                console.log(`[AddEvidencePage] Successfully uploaded remove file`);
+              } catch (err) {
+                console.error("[AddEvidencePage] Error uploading remove file:", err);
+                // Continue with other files even if one fails
+              }
+            }
+
+            // Upload search files
+            for (const uploadedFile of searchFiles) {
+              try {
+                console.log(`[AddEvidencePage] Uploading search file: ${uploadedFile.file.name}`);
+                await api.uploadEvidenceFile(formId, uploadedFile.file, "search");
+                console.log(`[AddEvidencePage] Successfully uploaded search file`);
+              } catch (err) {
+                console.error("[AddEvidencePage] Error uploading search file:", err);
+                // Continue with other files even if one fails
+              }
+            }
+
+            // Upload URLs if any
+            if (urls.length > 0) {
+              try {
+                console.log(`[AddEvidencePage] Uploading ${urls.length} URLs`);
+                await api.createUrlEvidence(formId, urls, "remove");
+              } catch (err) {
+                console.error("[AddEvidencePage] Error uploading URLs:", err);
+              }
+            }
+
+            // Upload keywords if any
+            if (textKeywords.length > 0) {
+              try {
+                console.log(`[AddEvidencePage] Uploading ${textKeywords.length} keywords`);
+                await api.createTextEvidence(formId, textKeywords, "search");
+              } catch (err) {
+                console.error("[AddEvidencePage] Error uploading keywords:", err);
+              }
+            }
+          } else {
+            const errorMsg = "[AddEvidencePage] No formId available, skipping file uploads. Files will not be saved to backend.";
+            console.warn(errorMsg);
+            // Show error to user
+            if (removeFiles.length > 0 || searchFiles.length > 0) {
+              alert("Warning: Form ID not available. Files were not uploaded to the server. Please go back and try again.");
+            }
+          }
+
+          // Save file metadata (not File objects, which can't be serialized)
+          const removeFilesMetadata = removeFiles.map((f) => ({
+            id: f.id,
+            name: f.file.name,
+            size: f.file.size,
+            type: f.file.type,
+            lastModified: f.file.lastModified,
+            action_type: "remove" as const,
+          }));
+          const searchFilesMetadata = searchFiles.map((f) => ({
+            id: f.id,
+            name: f.file.name,
+            size: f.file.size,
+            type: f.file.type,
+            lastModified: f.file.lastModified,
+            action_type: "search" as const,
+          }));
+
           onNext({
             evidence_type: activeTab,
+            remove_files: removeFilesMetadata,
+            search_files: searchFilesMetadata,
             remove_files_count: removeFiles.length,
             search_files_count: searchFiles.length,
             text_keywords: textKeywords,
             urls: urls,
-            // Note: Actual file uploads will need to be handled via FormData
-            // when the backend file upload endpoint is ready
           });
         }}
         isLoading={isLoading}
