@@ -6,6 +6,7 @@ interface CheckboxOptionProps {
   inputValue?: string;
   onInputChange?: (value: string) => void;
   inputPlaceholder?: string;
+  inputPosition?: "inline" | "below"; // New prop to control input placement
 }
 
 const CheckIcon = () => (
@@ -34,38 +35,55 @@ export function CheckboxOption({
   inputValue = "",
   onInputChange,
   inputPlaceholder = "Type here",
+  inputPosition = "below", // Default to below for consistency
 }: CheckboxOptionProps) {
+  const isInputBelow = inputPosition === "below";
+
   return (
-    <div
-      className={`w-full flex items-center gap-2 px-4 py-3 rounded-lg transition-colors ${
-        showInput && checked ? "items-start" : "items-center"
-      }`}
-    >
-      <button
-        type="button"
+    <div className={`flex flex-col gap-2.5 w-full ${isInputBelow ? "" : ""}`}>
+      <div
         onClick={() => onChange(!checked)}
-        className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none ${
-          checked ? "bg-[#b894ee]" : "bg-white/10 hover:bg-white/20"
-        }`}
-        aria-checked={checked}
-        role="checkbox"
+        className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
       >
-        {checked && <CheckIcon />}
-      </button>
-      <div className="flex-1 flex items-center gap-2 min-w-0">
-        <span className="text-sm font-medium leading-[1.25] text-white whitespace-pre-wrap">
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onChange(!checked);
+          }}
+          className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
+            checked ? "bg-[#b894ee]" : "bg-white/10"
+          }`}
+          aria-checked={checked}
+          role="checkbox"
+        >
+          {checked && <CheckIcon />}
+        </button>
+        <span className="text-sm font-medium leading-[1.25] text-white whitespace-pre-wrap flex-1">
           {label}
         </span>
-        {showInput && checked && (
+        {/* Inline input (old behavior for backwards compatibility) */}
+        {showInput && checked && !isInputBelow && (
           <input
             type="text"
             value={inputValue}
             onChange={(e) => onInputChange?.(e.target.value)}
             placeholder={inputPlaceholder}
-            className="flex-1 bg-gray-900/20 px-3 py-2 rounded-lg text-xs font-medium text-white placeholder:text-white/70 focus:outline-none focus:ring-2 focus:ring-[#b894ee]"
+            onClick={(e) => e.stopPropagation()}
+            className="flex-1 bg-gray-900/20 px-3 py-2 rounded-lg text-xs font-medium text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#b894ee]"
           />
         )}
       </div>
+      {/* Below input (new default behavior) */}
+      {showInput && checked && isInputBelow && (
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => onInputChange?.(e.target.value)}
+          placeholder={inputPlaceholder}
+          className="bg-gray-900/20 px-3 py-3 rounded-lg text-xs font-medium text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#b894ee] ml-4"
+        />
+      )}
     </div>
   );
 }

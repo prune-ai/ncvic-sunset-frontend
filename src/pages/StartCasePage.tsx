@@ -3,6 +3,7 @@ import { FormContainer } from "../components/layout/FormContainer";
 import { ButtonGroup } from "../components/ui/ButtonGroup";
 import { RadioOption } from "../components/ui/RadioOption";
 import { Button } from "../components/ui/Button";
+import { CheckboxOption } from "../components/ui/CheckboxOption";
 
 interface StartCasePageProps {
   onBack: () => void;
@@ -23,22 +24,22 @@ export function StartCasePage({
   const [sexualContent, setSexualContent] = useState<Set<string>>(new Set());
   const [otherSexualHarm, setOtherSexualHarm] = useState<string>("");
 
-  const handleReportingForChange = (value: string) => {
+  const handleReportingForChange = (value: string) => (checked: boolean) => {
     const newSet = new Set(reportingFor);
-    if (newSet.has(value)) {
-      newSet.delete(value);
-    } else {
+    if (checked) {
       newSet.add(value);
+    } else {
+      newSet.delete(value);
     }
     setReportingFor(newSet);
   };
 
-  const handleSexualContentChange = (value: string) => {
+  const handleSexualContentChange = (value: string) => (checked: boolean) => {
     const newSet = new Set(sexualContent);
-    if (newSet.has(value)) {
-      newSet.delete(value);
-    } else {
+    if (checked) {
       newSet.add(value);
+    } else {
+      newSet.delete(value);
     }
     setSexualContent(newSet);
   };
@@ -104,194 +105,31 @@ export function StartCasePage({
             Who are you reporting for?
           </h2>
           <div className="flex flex-col gap-0 w-full">
-            <div
-              onClick={() => handleReportingForChange("myself")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleReportingForChange("myself");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  reportingFor.has("myself") ? "bg-[#b894ee]" : "bg-white/10"
-                }`}
-                aria-checked={reportingFor.has("myself")}
-                role="checkbox"
-              >
-                {reportingFor.has("myself") && (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11.6667 3.5L5.25 9.91667L2.33333 7"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
-              </button>
-              <span className="text-sm font-medium leading-[1.25] text-white">
-                I am reporting for myself
-              </span>
-            </div>
-            <div
-              onClick={() => handleReportingForChange("child")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleReportingForChange("child");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  reportingFor.has("child") ? "bg-[#b894ee]" : "bg-white/10"
-                }`}
-                aria-checked={reportingFor.has("child")}
-                role="checkbox"
-              >
-                {reportingFor.has("child") && (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11.6667 3.5L5.25 9.91667L2.33333 7"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
-              </button>
-              <span className="text-sm font-medium leading-[1.25] text-white">
-                I am reporting for my child
-              </span>
-            </div>
-            <div
-              onClick={() => handleReportingForChange("anotherMinor")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleReportingForChange("anotherMinor");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  reportingFor.has("anotherMinor")
-                    ? "bg-[#b894ee]"
-                    : "bg-white/10"
-                }`}
-                aria-checked={reportingFor.has("anotherMinor")}
-                role="checkbox"
-              >
-                {reportingFor.has("anotherMinor") && (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11.6667 3.5L5.25 9.91667L2.33333 7"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
-              </button>
-              <span className="text-sm font-medium leading-[1.25] text-white">
-                I am reporting for another minor
-              </span>
-            </div>
-            <div
-              onClick={() => handleReportingForChange("adult")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleReportingForChange("adult");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  reportingFor.has("adult") ? "bg-[#b894ee]" : "bg-white/10"
-                }`}
-                aria-checked={reportingFor.has("adult")}
-                role="checkbox"
-              >
-                {reportingFor.has("adult") && (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11.6667 3.5L5.25 9.91667L2.33333 7"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
-              </button>
-              <span className="text-sm font-medium leading-[1.25] text-white">
-                I am reporting for an adult who needs help
-              </span>
-            </div>
-            <div className="flex items-center gap-2 px-4 py-3 rounded-xl w-full">
-              <button
-                type="button"
-                onClick={() => handleReportingForChange("anonymous")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none ${
-                  reportingFor.has("anonymous")
-                    ? "bg-[#b894ee]"
-                    : "bg-white/10 hover:bg-white/20"
-                }`}
-                aria-checked={reportingFor.has("anonymous")}
-                role="checkbox"
-              >
-                {reportingFor.has("anonymous") && (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11.6667 3.5L5.25 9.91667L2.33333 7"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
-              </button>
-              <span className="flex-1 text-sm font-medium leading-[1.25] text-white whitespace-pre-wrap">
-                I am helping someone report but do not want to identify myself
-              </span>
-            </div>
+            <CheckboxOption
+              label="I am reporting for myself"
+              checked={reportingFor.has("myself")}
+              onChange={handleReportingForChange("myself")}
+            />
+            <CheckboxOption
+              label="I am reporting for my child"
+              checked={reportingFor.has("child")}
+              onChange={handleReportingForChange("child")}
+            />
+            <CheckboxOption
+              label="I am reporting for another minor"
+              checked={reportingFor.has("anotherMinor")}
+              onChange={handleReportingForChange("anotherMinor")}
+            />
+            <CheckboxOption
+              label="I am reporting for an adult who needs help"
+              checked={reportingFor.has("adult")}
+              onChange={handleReportingForChange("adult")}
+            />
+            <CheckboxOption
+              label="I am helping someone report but do not want to identify myself"
+              checked={reportingFor.has("anonymous")}
+              onChange={handleReportingForChange("anonymous")}
+            />
           </div>
         </div>
 
@@ -301,283 +139,45 @@ export function StartCasePage({
             Is the content sexual or sexualized?
           </h2>
           <div className="flex flex-col gap-0 w-full">
-            <div
-              onClick={() => handleSexualContentChange("nude")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleSexualContentChange("nude");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  sexualContent.has("nude") ? "bg-[#b894ee]" : "bg-white/10"
-                }`}
-                aria-checked={sexualContent.has("nude")}
-                role="checkbox"
-              >
-                {sexualContent.has("nude") && (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11.6667 3.5L5.25 9.91667L2.33333 7"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
-              </button>
-              <span className="text-sm font-medium leading-[1.25] text-white">
-                Nude or partially nude images
-              </span>
-            </div>
-            <div
-              onClick={() => handleSexualContentChange("sexualActs")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleSexualContentChange("sexualActs");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  sexualContent.has("sexualActs")
-                    ? "bg-[#b894ee]"
-                    : "bg-white/10"
-                }`}
-                aria-checked={sexualContent.has("sexualActs")}
-                role="checkbox"
-              >
-                {sexualContent.has("sexualActs") && (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11.6667 3.5L5.25 9.91667L2.33333 7"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
-              </button>
-              <span className="text-sm font-medium leading-[1.25] text-white">
-                Sexual acts
-              </span>
-            </div>
-            <div
-              onClick={() => handleSexualContentChange("hiddenCamera")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleSexualContentChange("hiddenCamera");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  sexualContent.has("hiddenCamera")
-                    ? "bg-[#b894ee]"
-                    : "bg-white/10"
-                }`}
-                aria-checked={sexualContent.has("hiddenCamera")}
-                role="checkbox"
-              >
-                {sexualContent.has("hiddenCamera") && (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11.6667 3.5L5.25 9.91667L2.33333 7"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
-              </button>
-              <span className="text-sm font-medium leading-[1.25] text-white">
-                Hidden camera, spyware
-              </span>
-            </div>
-            <div
-              onClick={() => handleSexualContentChange("deepfake")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleSexualContentChange("deepfake");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  sexualContent.has("deepfake") ? "bg-[#b894ee]" : "bg-white/10"
-                }`}
-                aria-checked={sexualContent.has("deepfake")}
-                role="checkbox"
-              >
-                {sexualContent.has("deepfake") && (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11.6667 3.5L5.25 9.91667L2.33333 7"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
-              </button>
-              <span className="text-sm font-medium leading-[1.25] text-white">
-                Sexualized deepfake or AI-generated image
-              </span>
-            </div>
-            <div
-              onClick={() => handleSexualContentChange("blackmail")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleSexualContentChange("blackmail");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  sexualContent.has("blackmail")
-                    ? "bg-[#b894ee]"
-                    : "bg-white/10"
-                }`}
-                aria-checked={sexualContent.has("blackmail")}
-                role="checkbox"
-              >
-                {sexualContent.has("blackmail") && (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11.6667 3.5L5.25 9.91667L2.33333 7"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
-              </button>
-              <span className="text-sm font-medium leading-[1.25] text-white">
-                Blackmail / extortion (sextortion)
-              </span>
-            </div>
-            <div
-              onClick={() => handleSexualContentChange("other")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleSexualContentChange("other");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  sexualContent.has("other") ? "bg-[#b894ee]" : "bg-white/10"
-                }`}
-                aria-checked={sexualContent.has("other")}
-                role="checkbox"
-              >
-                {sexualContent.has("other") && (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11.6667 3.5L5.25 9.91667L2.33333 7"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
-              </button>
-              <span className="text-sm font-medium leading-[1.25] text-white">
-                Other sexual harm:{" "}
-              </span>
-              {sexualContent.has("other") && (
-                <input
-                  type="text"
-                  value={otherSexualHarm}
-                  onChange={(e) => setOtherSexualHarm(e.target.value)}
-                  placeholder="Type here"
-                  className="flex-1 bg-gray-900/20 px-3 py-2 rounded-lg text-xs font-medium text-white placeholder:text-white/70 focus:outline-none focus:ring-2 focus:ring-[#b894ee]"
-                />
-              )}
-            </div>
-            <div className="flex items-center gap-2 px-4 py-3 rounded-xl w-full">
-              <button
-                type="button"
-                onClick={() => handleSexualContentChange("none")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none ${
-                  sexualContent.has("none")
-                    ? "bg-[#b894ee]"
-                    : "bg-white/10 hover:bg-white/20"
-                }`}
-                aria-checked={sexualContent.has("none")}
-                role="checkbox"
-              >
-                {sexualContent.has("none") && (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11.6667 3.5L5.25 9.91667L2.33333 7"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
-              </button>
-              <span className="flex-1 text-sm font-medium leading-[1.25] text-white whitespace-pre-wrap">
-                None of the above
-              </span>
-            </div>
+            <CheckboxOption
+              label="Nude or partially nude images"
+              checked={sexualContent.has("nude")}
+              onChange={handleSexualContentChange("nude")}
+            />
+            <CheckboxOption
+              label="Sexual acts"
+              checked={sexualContent.has("sexualActs")}
+              onChange={handleSexualContentChange("sexualActs")}
+            />
+            <CheckboxOption
+              label="Hidden camera, spyware"
+              checked={sexualContent.has("hiddenCamera")}
+              onChange={handleSexualContentChange("hiddenCamera")}
+            />
+            <CheckboxOption
+              label="Sexualized deepfake or AI-generated image"
+              checked={sexualContent.has("deepfake")}
+              onChange={handleSexualContentChange("deepfake")}
+            />
+            <CheckboxOption
+              label="Blackmail / extortion (sextortion)"
+              checked={sexualContent.has("blackmail")}
+              onChange={handleSexualContentChange("blackmail")}
+            />
+            <CheckboxOption
+              label="Other sexual harm"
+              checked={sexualContent.has("other")}
+              onChange={handleSexualContentChange("other")}
+              showInput={true}
+              inputValue={otherSexualHarm}
+              onInputChange={setOtherSexualHarm}
+              inputPosition="below"
+            />
+            <CheckboxOption
+              label="None of the above"
+              checked={sexualContent.has("none")}
+              onChange={handleSexualContentChange("none")}
+            />
           </div>
         </div>
       </div>

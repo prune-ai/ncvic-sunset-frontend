@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { FormContainer } from "../components/layout/FormContainer";
 import { Button } from "../components/ui/Button";
+import { CheckboxOption } from "../components/ui/CheckboxOption";
 
 interface ContactInfoPageProps {
   onBack: () => void;
@@ -661,55 +662,27 @@ export function ContactInfoPage({
               You can change these preferences in your portal at any time.
             </p>
           </div>
-          <div className="flex flex-col gap-3.5 w-full">
-            <div
-              onClick={() => handleNotificationChange("email")}
-              className="flex items-center gap-2 cursor-pointer hover:bg-gray-900/20 p-2 -m-2 rounded-lg transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleNotificationChange("email");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  notificationPreferences.has("email")
-                    ? "bg-[#b894ee]"
-                    : "bg-white/10"
-                }`}
-                aria-checked={notificationPreferences.has("email")}
-                role="checkbox"
-              >
-                {notificationPreferences.has("email") && <CheckIcon />}
-              </button>
-              <span className="text-sm font-medium leading-[1.25] text-white">
-                Email updates
-              </span>
-            </div>
-            <div
-              onClick={() => handleNotificationChange("sms")}
-              className="flex items-center gap-2 cursor-pointer hover:bg-gray-900/20 p-2 -m-2 rounded-lg transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleNotificationChange("sms");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  notificationPreferences.has("sms")
-                    ? "bg-[#b894ee]"
-                    : "bg-white/10"
-                }`}
-                aria-checked={notificationPreferences.has("sms")}
-                role="checkbox"
-              >
-                {notificationPreferences.has("sms") && <CheckIcon />}
-              </button>
-              <span className="text-sm font-medium leading-[1.25] text-white">
-                Text/SMS updates
-              </span>
-            </div>
+          <div className="flex flex-col gap-0 w-full">
+            <CheckboxOption
+              label="Email updates"
+              checked={notificationPreferences.has("email")}
+              onChange={(checked) => {
+                const newSet = new Set(notificationPreferences);
+                if (checked) newSet.add("email");
+                else newSet.delete("email");
+                setNotificationPreferences(newSet);
+              }}
+            />
+            <CheckboxOption
+              label="Text/SMS updates"
+              checked={notificationPreferences.has("sms")}
+              onChange={(checked) => {
+                const newSet = new Set(notificationPreferences);
+                if (checked) newSet.add("sms");
+                else newSet.delete("sms");
+                setNotificationPreferences(newSet);
+              }}
+            />
           </div>
         </div>
 
@@ -738,14 +711,20 @@ export function ContactInfoPage({
               </span>
             </div>
             <div className="flex flex-col gap-2.5 w-full">
-              <div className="flex items-center gap-2">
+              <div
+                onClick={() => setIdentityPreference("provideName")}
+                className="flex items-center gap-2 cursor-pointer hover:bg-gray-900/20 p-2 -m-2 rounded-lg transition-colors"
+              >
                 <button
                   type="button"
-                  onClick={() => setIdentityPreference("provideName")}
-                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none ${
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIdentityPreference("provideName");
+                  }}
+                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                     identityPreference === "provideName"
                       ? "bg-[#b894ee]"
-                      : "bg-white/10 hover:bg-white/20"
+                      : "bg-white/10"
                   }`}
                   aria-checked={identityPreference === "provideName"}
                   role="radio"
