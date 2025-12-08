@@ -2,8 +2,7 @@
  * API client for NCVIC Sunset Backend
  */
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:8001";
+const API_BASE_URL = "https://nc-aa1a0762ed8b46afb47bd598909d279e.ecs.us-west-2.on.aws";
 
 export interface ApiError {
   detail: string;

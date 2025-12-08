@@ -16,5 +16,15 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: true,
+    // Ensure assets are built correctly for Cloudflare Workers
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        // Ensure consistent asset naming
+        assetFileNames: 'assets/[name].[hash].[ext]',
+        chunkFileNames: 'assets/[name].[hash].js',
+        entryFileNames: 'assets/[name].[hash].js',
+      },
+    },
   },
 })
