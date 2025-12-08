@@ -90,7 +90,7 @@ export function URLUploadArea({
           onKeyDown={handleKeyDown}
           onPaste={handlePaste}
           placeholder={placeholder}
-          className="flex-1 bg-transparent border-none outline-none resize-none text-xs font-normal leading-[1.25] text-zinc-200 placeholder:text-zinc-200/60 focus:outline-none min-h-[100px]"
+          className="flex-1 bg-transparent border-none outline-none resize-none text-sm text-white placeholder:text-white/40 focus:outline-none min-h-[100px]"
           rows={6}
         />
       </div>
