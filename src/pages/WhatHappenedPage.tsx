@@ -67,14 +67,20 @@ export function WhatHappenedPage({
             What happened?
           </h2>
           <div className="flex flex-col gap-0 w-full">
-            <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+            <div
+              onClick={() => handleWhatHappenedChange("postedWithoutConsent")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleWhatHappenedChange("postedWithoutConsent")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleWhatHappenedChange("postedWithoutConsent");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                   whatHappened.has("postedWithoutConsent")
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10"
                 }`}
                 aria-checked={whatHappened.has("postedWithoutConsent")}
                 role="checkbox"
@@ -85,14 +91,20 @@ export function WhatHappenedPage({
                 Images/videos posted without consent
               </span>
             </div>
-            <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+            <div
+              onClick={() => handleWhatHappenedChange("threatsExtortion")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleWhatHappenedChange("threatsExtortion")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleWhatHappenedChange("threatsExtortion");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                   whatHappened.has("threatsExtortion")
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10"
                 }`}
                 aria-checked={whatHappened.has("threatsExtortion")}
                 role="checkbox"
@@ -103,14 +115,20 @@ export function WhatHappenedPage({
                 Threats/extortion (sextortion)
               </span>
             </div>
-            <div className="bg-gray-900/20 flex items-center gap-2 px-4 py-3 rounded-lg w-full">
+            <div
+              onClick={() => handleWhatHappenedChange("coercionGrooming")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleWhatHappenedChange("coercionGrooming")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleWhatHappenedChange("coercionGrooming");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                   whatHappened.has("coercionGrooming")
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10"
                 }`}
                 aria-checked={whatHappened.has("coercionGrooming")}
                 role="checkbox"
@@ -121,14 +139,20 @@ export function WhatHappenedPage({
                 Coercion, grooming, blackmail
               </span>
             </div>
-            <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+            <div
+              onClick={() => handleWhatHappenedChange("hiddenCamera")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleWhatHappenedChange("hiddenCamera")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleWhatHappenedChange("hiddenCamera");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                   whatHappened.has("hiddenCamera")
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10"
                 }`}
                 aria-checked={whatHappened.has("hiddenCamera")}
                 role="checkbox"
@@ -139,14 +163,20 @@ export function WhatHappenedPage({
                 Hidden camera, spyware
               </span>
             </div>
-            <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+            <div
+              onClick={() => handleWhatHappenedChange("revengeAbuse")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleWhatHappenedChange("revengeAbuse")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleWhatHappenedChange("revengeAbuse");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                   whatHappened.has("revengeAbuse")
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10"
                 }`}
                 aria-checked={whatHappened.has("revengeAbuse")}
                 role="checkbox"
@@ -157,14 +187,20 @@ export function WhatHappenedPage({
                 Revenge abuse by partner/ex
               </span>
             </div>
-            <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+            <div
+              onClick={() => handleWhatHappenedChange("sexTrafficking")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleWhatHappenedChange("sexTrafficking")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleWhatHappenedChange("sexTrafficking");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                   whatHappened.has("sexTrafficking")
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10"
                 }`}
                 aria-checked={whatHappened.has("sexTrafficking")}
                 role="checkbox"
@@ -175,14 +211,20 @@ export function WhatHappenedPage({
                 Sex trafficking
               </span>
             </div>
-            <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+            <div
+              onClick={() => handleWhatHappenedChange("hackedStolen")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleWhatHappenedChange("hackedStolen")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleWhatHappenedChange("hackedStolen");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                   whatHappened.has("hackedStolen")
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10"
                 }`}
                 aria-checked={whatHappened.has("hackedStolen")}
                 role="checkbox"
@@ -193,14 +235,20 @@ export function WhatHappenedPage({
                 Hacked or stolen images
               </span>
             </div>
-            <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+            <div
+              onClick={() => handleWhatHappenedChange("deepfakeAbuse")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleWhatHappenedChange("deepfakeAbuse")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleWhatHappenedChange("deepfakeAbuse");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                   whatHappened.has("deepfakeAbuse")
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10"
                 }`}
                 aria-checked={whatHappened.has("deepfakeAbuse")}
                 role="checkbox"
@@ -211,14 +259,20 @@ export function WhatHappenedPage({
                 Deepfake abuse
               </span>
             </div>
-            <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+            <div
+              onClick={() => handleWhatHappenedChange("federalCase")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleWhatHappenedChange("federalCase")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleWhatHappenedChange("federalCase");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                   whatHappened.has("federalCase")
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10"
                 }`}
                 aria-checked={whatHappened.has("federalCase")}
                 role="checkbox"
@@ -229,14 +283,18 @@ export function WhatHappenedPage({
                 Known federal case: Please describe briefly (text)
               </span>
             </div>
-            <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+            <div
+              onClick={() => handleWhatHappenedChange("other")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleWhatHappenedChange("other")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
-                  whatHappened.has("other")
-                    ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleWhatHappenedChange("other");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
+                  whatHappened.has("other") ? "bg-[#b894ee]" : "bg-white/10"
                 }`}
                 aria-checked={whatHappened.has("other")}
                 role="checkbox"
@@ -268,14 +326,18 @@ export function WhatHappenedPage({
           {/* Conditional checkboxes if Yes is selected */}
           {knowsWhoPosted === "yes" && (
             <div className="flex flex-col gap-0 w-full mt-4">
-              <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+              <div
+                onClick={() => handleWhoPostedChange("exPartner")}
+                className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+              >
                 <button
                   type="button"
-                  onClick={() => handleWhoPostedChange("exPartner")}
-                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
-                    whoPosted.has("exPartner")
-                      ? "bg-[#b894ee]"
-                      : "bg-transparent border-[1.3px] border-white rounded-md"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleWhoPostedChange("exPartner");
+                  }}
+                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
+                    whoPosted.has("exPartner") ? "bg-[#b894ee]" : "bg-white/10"
                   }`}
                   aria-checked={whoPosted.has("exPartner")}
                   role="checkbox"
@@ -286,14 +348,20 @@ export function WhatHappenedPage({
                   Ex-partner
                 </span>
               </div>
-              <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+              <div
+                onClick={() => handleWhoPostedChange("currentPartner")}
+                className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+              >
                 <button
                   type="button"
-                  onClick={() => handleWhoPostedChange("currentPartner")}
-                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleWhoPostedChange("currentPartner");
+                  }}
+                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                     whoPosted.has("currentPartner")
                       ? "bg-[#b894ee]"
-                      : "bg-transparent border-[1.3px] border-white rounded-md"
+                      : "bg-white/10"
                   }`}
                   aria-checked={whoPosted.has("currentPartner")}
                   role="checkbox"
@@ -304,14 +372,20 @@ export function WhatHappenedPage({
                   Current partner
                 </span>
               </div>
-              <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+              <div
+                onClick={() => handleWhoPostedChange("familyMember")}
+                className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+              >
                 <button
                   type="button"
-                  onClick={() => handleWhoPostedChange("familyMember")}
-                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleWhoPostedChange("familyMember");
+                  }}
+                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                     whoPosted.has("familyMember")
                       ? "bg-[#b894ee]"
-                      : "bg-transparent border-[1.3px] border-white rounded-md"
+                      : "bg-white/10"
                   }`}
                   aria-checked={whoPosted.has("familyMember")}
                   role="checkbox"
@@ -322,14 +396,20 @@ export function WhatHappenedPage({
                   Family member
                 </span>
               </div>
-              <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+              <div
+                onClick={() => handleWhoPostedChange("friendAcquaintance")}
+                className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+              >
                 <button
                   type="button"
-                  onClick={() => handleWhoPostedChange("friendAcquaintance")}
-                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleWhoPostedChange("friendAcquaintance");
+                  }}
+                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                     whoPosted.has("friendAcquaintance")
                       ? "bg-[#b894ee]"
-                      : "bg-transparent border-[1.3px] border-white rounded-md"
+                      : "bg-white/10"
                   }`}
                   aria-checked={whoPosted.has("friendAcquaintance")}
                   role="checkbox"
@@ -340,14 +420,20 @@ export function WhatHappenedPage({
                   Friend or acquaintance
                 </span>
               </div>
-              <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+              <div
+                onClick={() => handleWhoPostedChange("professionalColleague")}
+                className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+              >
                 <button
                   type="button"
-                  onClick={() => handleWhoPostedChange("professionalColleague")}
-                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleWhoPostedChange("professionalColleague");
+                  }}
+                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                     whoPosted.has("professionalColleague")
                       ? "bg-[#b894ee]"
-                      : "bg-transparent border-[1.3px] border-white rounded-md"
+                      : "bg-white/10"
                   }`}
                   aria-checked={whoPosted.has("professionalColleague")}
                   role="checkbox"
@@ -362,10 +448,10 @@ export function WhatHappenedPage({
                 <button
                   type="button"
                   onClick={() => handleWhoPostedChange("stranger")}
-                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none ${
                     whoPosted.has("stranger")
                       ? "bg-[#b894ee]"
-                      : "bg-transparent border-[1.3px] border-white rounded-md"
+                      : "bg-white/10 hover:bg-white/20"
                   }`}
                   aria-checked={whoPosted.has("stranger")}
                   role="checkbox"
@@ -376,14 +462,20 @@ export function WhatHappenedPage({
                   Stranger / someone online
                 </span>
               </div>
-              <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+              <div
+                onClick={() => handleWhoPostedChange("coercedThreatened")}
+                className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+              >
                 <button
                   type="button"
-                  onClick={() => handleWhoPostedChange("coercedThreatened")}
-                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleWhoPostedChange("coercedThreatened");
+                  }}
+                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                     whoPosted.has("coercedThreatened")
                       ? "bg-[#b894ee]"
-                      : "bg-transparent border-[1.3px] border-white rounded-md"
+                      : "bg-white/10"
                   }`}
                   aria-checked={whoPosted.has("coercedThreatened")}
                   role="checkbox"
@@ -394,14 +486,18 @@ export function WhatHappenedPage({
                   Someone who coerced or threatened me
                 </span>
               </div>
-              <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+              <div
+                onClick={() => handleWhoPostedChange("notSure")}
+                className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+              >
                 <button
                   type="button"
-                  onClick={() => handleWhoPostedChange("notSure")}
-                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
-                    whoPosted.has("notSure")
-                      ? "bg-[#b894ee]"
-                      : "bg-transparent border-[1.3px] border-white rounded-md"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleWhoPostedChange("notSure");
+                  }}
+                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
+                    whoPosted.has("notSure") ? "bg-[#b894ee]" : "bg-white/10"
                   }`}
                   aria-checked={whoPosted.has("notSure")}
                   role="checkbox"
@@ -434,7 +530,8 @@ export function WhatHappenedPage({
             onNext({
               what_happened: Array.from(whatHappened),
               knows_who_posted: knowsWhoPosted,
-              who_posted: knowsWhoPosted === "yes" ? Array.from(whoPosted) : null,
+              who_posted:
+                knowsWhoPosted === "yes" ? Array.from(whoPosted) : null,
             });
           }}
           className="flex-1 lg:flex-none"

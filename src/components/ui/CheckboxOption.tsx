@@ -44,10 +44,8 @@ export function CheckboxOption({
       <button
         type="button"
         onClick={() => onChange(!checked)}
-        className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
-          checked
-            ? "bg-[#b894ee]"
-            : "bg-transparent border-[1.3px] border-white rounded-md"
+        className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none ${
+          checked ? "bg-[#b894ee]" : "bg-white/10 hover:bg-white/20"
         }`}
         aria-checked={checked}
         role="checkbox"

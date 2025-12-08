@@ -15,8 +15,8 @@ export function FormContainer({
   children,
 }: FormContainerProps) {
   return (
-    <div className="backdrop-blur-[50px] backdrop-filter bg-gray-900/20 flex flex-col rounded-[12px] w-full max-h-[calc(100vh-120px)] lg:max-h-[calc(100vh-200px)] overflow-hidden">
-      <div className="flex flex-col gap-6 lg:gap-[32px] p-4 lg:p-[32px] pb-4 lg:pb-[32px] overflow-y-auto flex-1 custom-scrollbar">
+    <div className="backdrop-blur-[50px] backdrop-filter bg-gray-900/20 flex flex-col rounded-[12px] w-full">
+      <div className="flex flex-col gap-6 lg:gap-[32px] p-4 lg:p-[32px] pb-4 lg:pb-[32px]">
         <div className="flex items-center justify-between gap-2 w-full shrink-0">
           <h1 className="text-white text-xl lg:text-2xl font-semibold leading-[1.45] text-left lg:text-center whitespace-nowrap flex-1 lg:flex-none">
             {title}

@@ -104,14 +104,18 @@ export function StartCasePage({
             Who are you reporting for?
           </h2>
           <div className="flex flex-col gap-0 w-full">
-            <div className="bg-gray-900/20 flex items-center gap-2 px-4 py-3 rounded-lg w-full">
+            <div
+              onClick={() => handleReportingForChange("myself")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleReportingForChange("myself")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
-                  reportingFor.has("myself")
-                    ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleReportingForChange("myself");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
+                  reportingFor.has("myself") ? "bg-[#b894ee]" : "bg-white/10"
                 }`}
                 aria-checked={reportingFor.has("myself")}
                 role="checkbox"
@@ -138,14 +142,18 @@ export function StartCasePage({
                 I am reporting for myself
               </span>
             </div>
-            <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+            <div
+              onClick={() => handleReportingForChange("child")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleReportingForChange("child")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
-                  reportingFor.has("child")
-                    ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleReportingForChange("child");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
+                  reportingFor.has("child") ? "bg-[#b894ee]" : "bg-white/10"
                 }`}
                 aria-checked={reportingFor.has("child")}
                 role="checkbox"
@@ -172,14 +180,20 @@ export function StartCasePage({
                 I am reporting for my child
               </span>
             </div>
-            <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+            <div
+              onClick={() => handleReportingForChange("anotherMinor")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleReportingForChange("anotherMinor")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleReportingForChange("anotherMinor");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                   reportingFor.has("anotherMinor")
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10"
                 }`}
                 aria-checked={reportingFor.has("anotherMinor")}
                 role="checkbox"
@@ -206,14 +220,18 @@ export function StartCasePage({
                 I am reporting for another minor
               </span>
             </div>
-            <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+            <div
+              onClick={() => handleReportingForChange("adult")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleReportingForChange("adult")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
-                  reportingFor.has("adult")
-                    ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleReportingForChange("adult");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
+                  reportingFor.has("adult") ? "bg-[#b894ee]" : "bg-white/10"
                 }`}
                 aria-checked={reportingFor.has("adult")}
                 role="checkbox"
@@ -244,10 +262,10 @@ export function StartCasePage({
               <button
                 type="button"
                 onClick={() => handleReportingForChange("anonymous")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none ${
                   reportingFor.has("anonymous")
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10 hover:bg-white/20"
                 }`}
                 aria-checked={reportingFor.has("anonymous")}
                 role="checkbox"
@@ -283,14 +301,18 @@ export function StartCasePage({
             Is the content sexual or sexualized?
           </h2>
           <div className="flex flex-col gap-0 w-full">
-            <div className="bg-gray-900/20 flex items-center gap-2 px-4 py-3 rounded-lg w-full">
+            <div
+              onClick={() => handleSexualContentChange("nude")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleSexualContentChange("nude")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
-                  sexualContent.has("nude")
-                    ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSexualContentChange("nude");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
+                  sexualContent.has("nude") ? "bg-[#b894ee]" : "bg-white/10"
                 }`}
                 aria-checked={sexualContent.has("nude")}
                 role="checkbox"
@@ -317,14 +339,20 @@ export function StartCasePage({
                 Nude or partially nude images
               </span>
             </div>
-            <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+            <div
+              onClick={() => handleSexualContentChange("sexualActs")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleSexualContentChange("sexualActs")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSexualContentChange("sexualActs");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                   sexualContent.has("sexualActs")
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10"
                 }`}
                 aria-checked={sexualContent.has("sexualActs")}
                 role="checkbox"
@@ -351,14 +379,20 @@ export function StartCasePage({
                 Sexual acts
               </span>
             </div>
-            <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+            <div
+              onClick={() => handleSexualContentChange("hiddenCamera")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleSexualContentChange("hiddenCamera")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSexualContentChange("hiddenCamera");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                   sexualContent.has("hiddenCamera")
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10"
                 }`}
                 aria-checked={sexualContent.has("hiddenCamera")}
                 role="checkbox"
@@ -385,14 +419,18 @@ export function StartCasePage({
                 Hidden camera, spyware
               </span>
             </div>
-            <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+            <div
+              onClick={() => handleSexualContentChange("deepfake")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleSexualContentChange("deepfake")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
-                  sexualContent.has("deepfake")
-                    ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSexualContentChange("deepfake");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
+                  sexualContent.has("deepfake") ? "bg-[#b894ee]" : "bg-white/10"
                 }`}
                 aria-checked={sexualContent.has("deepfake")}
                 role="checkbox"
@@ -419,14 +457,20 @@ export function StartCasePage({
                 Sexualized deepfake or AI-generated image
               </span>
             </div>
-            <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+            <div
+              onClick={() => handleSexualContentChange("blackmail")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleSexualContentChange("blackmail")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSexualContentChange("blackmail");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                   sexualContent.has("blackmail")
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10"
                 }`}
                 aria-checked={sexualContent.has("blackmail")}
                 role="checkbox"
@@ -453,14 +497,18 @@ export function StartCasePage({
                 Blackmail / extortion (sextortion)
               </span>
             </div>
-            <div className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full">
+            <div
+              onClick={() => handleSexualContentChange("other")}
+              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleSexualContentChange("other")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
-                  sexualContent.has("other")
-                    ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSexualContentChange("other");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
+                  sexualContent.has("other") ? "bg-[#b894ee]" : "bg-white/10"
                 }`}
                 aria-checked={sexualContent.has("other")}
                 role="checkbox"
@@ -500,10 +548,10 @@ export function StartCasePage({
               <button
                 type="button"
                 onClick={() => handleSexualContentChange("none")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none ${
                   sexualContent.has("none")
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10 hover:bg-white/20"
                 }`}
                 aria-checked={sexualContent.has("none")}
                 role="checkbox"
@@ -535,9 +583,7 @@ export function StartCasePage({
       </div>
 
       {/* Error message */}
-      {error && (
-        <div className="text-red-400 text-sm mt-4">{error}</div>
-      )}
+      {error && <div className="text-red-400 text-sm mt-4">{error}</div>}
 
       {/* Navigation buttons */}
       <div className="flex items-center justify-between gap-2 w-full mt-4">
@@ -559,7 +605,12 @@ export function StartCasePage({
             });
           }}
           className="flex-1 lg:flex-none"
-          disabled={isLoading || !ageInContent || reportingFor.size === 0 || sexualContent.size === 0}
+          disabled={
+            isLoading ||
+            !ageInContent ||
+            reportingFor.size === 0 ||
+            sexualContent.size === 0
+          }
         >
           {isLoading ? "Saving..." : "Next"}
         </Button>

@@ -1,4 +1,3 @@
-
 interface LandingPageProps {
   onStartCase: () => void;
   onLearnMore?: () => void;
@@ -16,14 +15,8 @@ export function LandingPage({ onStartCase, onLearnMore }: LandingPageProps) {
         />
       </div>
 
-      {/* Header with logo */}
-      <header className="absolute top-0 left-0 right-0 z-20 backdrop-blur-sm backdrop-filter flex items-center justify-between px-4 lg:px-[150px] py-[10px]">
-        <div className="h-[40px] w-[140px] flex items-center">
-          {/* Logo placeholder - replace with actual logo image */}
-          <div className="h-[35px] w-[70px] bg-white/20 rounded flex items-center justify-center">
-            <span className="text-white text-xs font-semibold">NCMEC</span>
-          </div>
-        </div>
+      {/* Header with hamburger menu */}
+      <header className="absolute top-0 left-0 right-0 z-20 backdrop-blur-sm backdrop-filter flex items-center justify-end px-4 lg:px-[150px] py-[10px]">
         {/* Hamburger menu icon - mobile only */}
         <button
           className="lg:hidden w-6 h-6 flex items-center justify-center"
@@ -94,7 +87,7 @@ export function LandingPage({ onStartCase, onLearnMore }: LandingPageProps) {
               onClick={onStartCase}
               className="bg-[#8be784] flex flex-1 lg:flex-none gap-[8px] items-center justify-center px-[32px] py-[16px] rounded-[12px] shadow-[6px_6px_0px_0px_#d09fba] hover:opacity-90 active:opacity-75 transition-opacity cursor-pointer min-h-[44px]"
             >
-              <span className="text-[14px] font-semibold leading-[1.25] text-center text-gray-900 whitespace-nowrap">
+              <span className="text-[14px] font-semibold leading-[1.25] text-center text-white whitespace-nowrap">
                 Start My Case
               </span>
             </button>

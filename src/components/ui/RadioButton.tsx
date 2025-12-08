@@ -22,12 +22,12 @@ export function RadioButton({
       {options.map((option) => (
         <div
           key={option.value}
-          className="border border-white/20 border-solid flex gap-2 items-start px-4 py-3 rounded-2xl w-full"
+          className="border border-transparent hover:border-white/20 border-solid flex gap-2 items-start px-4 py-3 rounded-2xl w-full transition-colors"
         >
           <button
             type="button"
             onClick={() => onChange(option.value)}
-            className={`flex items-center justify-center rounded-full shrink-0 w-5 h-5 border-2 transition-colors ${
+            className={`flex items-center justify-center rounded-full shrink-0 w-5 h-5 border-2 transition-colors focus:outline-none ${
               value === option.value
                 ? "border-[#b894ee] bg-[#b894ee]"
                 : "border-white/40 bg-transparent"

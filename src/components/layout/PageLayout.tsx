@@ -7,9 +7,9 @@ interface PageLayoutProps {
 
 export function PageLayout({ children, backgroundImage }: PageLayoutProps) {
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative w-full min-h-screen">
       {backgroundImage && (
-        <div className="absolute inset-0 -left-[596px] w-[2632px] h-[1755px]">
+        <div className="fixed inset-0 -left-[596px] w-[2632px] h-[1755px]">
           <img
             src={backgroundImage}
             alt=""
@@ -17,7 +17,7 @@ export function PageLayout({ children, backgroundImage }: PageLayoutProps) {
           />
         </div>
       )}
-      <div className="relative z-10 flex items-center justify-center h-screen p-4 pb-20 lg:pb-[100px]">
+      <div className="relative z-10 flex items-center justify-center min-h-screen p-4 pb-20 lg:pb-[100px]">
         <div className="w-full max-w-[500px] py-4 lg:py-8">{children}</div>
       </div>
       <footer className="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center pt-[10px] pb-[30px]">

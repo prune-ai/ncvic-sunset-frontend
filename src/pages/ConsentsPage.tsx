@@ -58,7 +58,7 @@ export function ConsentsPage({
             Required to begin
           </h3>
           <div className="flex flex-col gap-2 w-full">
-            <div className="border border-white/20 flex gap-2 items-start px-4 py-3 rounded-2xl w-full">
+            <div className="border border-transparent hover:border-white/20 flex gap-2 items-start px-4 py-3 rounded-2xl w-full transition-colors">
               <button
                 type="button"
                 onClick={() =>
@@ -67,10 +67,10 @@ export function ConsentsPage({
                     accurateInfo: !prev.accurateInfo,
                   }))
                 }
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none ${
                   consents.accurateInfo
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10 hover:bg-white/20"
                 }`}
                 aria-checked={consents.accurateInfo}
                 role="checkbox"
@@ -98,7 +98,7 @@ export function ConsentsPage({
                 NCVIC to review it to create and support my case.
               </span>
             </div>
-            <div className="border border-white/20 flex gap-2 items-start px-4 py-3 rounded-2xl w-full">
+            <div className="border border-transparent hover:border-white/20 flex gap-2 items-start px-4 py-3 rounded-2xl w-full transition-colors">
               <button
                 type="button"
                 onClick={() =>
@@ -107,10 +107,10 @@ export function ConsentsPage({
                     hashingAnalysis: !prev.hashingAnalysis,
                   }))
                 }
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none ${
                   consents.hashingAnalysis
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10 hover:bg-white/20"
                 }`}
                 aria-checked={consents.hashingAnalysis}
                 role="checkbox"
@@ -144,7 +144,7 @@ export function ConsentsPage({
                 </span>
               </div>
             </div>
-            <div className="border border-white/20 flex gap-2 items-start px-4 py-3 rounded-2xl w-full">
+            <div className="border border-transparent hover:border-white/20 flex gap-2 items-start px-4 py-3 rounded-2xl w-full transition-colors">
               <button
                 type="button"
                 onClick={() =>
@@ -153,10 +153,10 @@ export function ConsentsPage({
                     takedownRequests: !prev.takedownRequests,
                   }))
                 }
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none ${
                   consents.takedownRequests
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10 hover:bg-white/20"
                 }`}
                 aria-checked={consents.takedownRequests}
                 role="checkbox"

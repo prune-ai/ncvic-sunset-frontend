@@ -31,12 +31,12 @@ export function Checkbox({
   description,
 }: CheckboxProps) {
   return (
-    <div className="border border-white/20 border-solid flex gap-2 items-start px-4 py-3 rounded-2xl w-full">
+    <div className="border border-transparent hover:border-white/20 border-solid flex gap-2 items-start px-4 py-3 rounded-2xl w-full transition-colors">
       <button
         type="button"
         onClick={() => onChange(!checked)}
-        className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
-          checked ? "bg-[#b894ee]" : "bg-white/10"
+        className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none ${
+          checked ? "bg-[#b894ee]" : "bg-white/10 hover:bg-white/20"
         }`}
         aria-checked={checked}
         role="checkbox"

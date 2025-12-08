@@ -662,14 +662,20 @@ export function ContactInfoPage({
             </p>
           </div>
           <div className="flex flex-col gap-3.5 w-full">
-            <div className="flex items-center gap-2">
+            <div
+              onClick={() => handleNotificationChange("email")}
+              className="flex items-center gap-2 cursor-pointer hover:bg-gray-900/20 p-2 -m-2 rounded-lg transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleNotificationChange("email")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNotificationChange("email");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                   notificationPreferences.has("email")
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10"
                 }`}
                 aria-checked={notificationPreferences.has("email")}
                 role="checkbox"
@@ -680,14 +686,20 @@ export function ContactInfoPage({
                 Email updates
               </span>
             </div>
-            <div className="flex items-center gap-2">
+            <div
+              onClick={() => handleNotificationChange("sms")}
+              className="flex items-center gap-2 cursor-pointer hover:bg-gray-900/20 p-2 -m-2 rounded-lg transition-colors"
+            >
               <button
                 type="button"
-                onClick={() => handleNotificationChange("sms")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNotificationChange("sms");
+                }}
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
                   notificationPreferences.has("sms")
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10"
                 }`}
                 aria-checked={notificationPreferences.has("sms")}
                 role="checkbox"
@@ -711,10 +723,10 @@ export function ContactInfoPage({
               <button
                 type="button"
                 onClick={() => setIdentityPreference("anonymous")}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none ${
                   identityPreference === "anonymous"
                     ? "bg-[#b894ee]"
-                    : "bg-transparent border-[1.3px] border-white rounded-md"
+                    : "bg-white/10 hover:bg-white/20"
                 }`}
                 aria-checked={identityPreference === "anonymous"}
                 role="radio"
@@ -730,10 +742,10 @@ export function ContactInfoPage({
                 <button
                   type="button"
                   onClick={() => setIdentityPreference("provideName")}
-                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors ${
+                  className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none ${
                     identityPreference === "provideName"
                       ? "bg-[#b894ee]"
-                      : "bg-transparent border-[1.3px] border-white rounded-md"
+                      : "bg-white/10 hover:bg-white/20"
                   }`}
                   aria-checked={identityPreference === "provideName"}
                   role="radio"
@@ -775,7 +787,8 @@ export function ContactInfoPage({
             onNext({
               user_location: userLocation,
               knows_perpetrator_location: knowsPerpetratorLocation,
-              perpetrator_location: knowsPerpetratorLocation === "yes" ? perpetratorLocation : null,
+              perpetrator_location:
+                knowsPerpetratorLocation === "yes" ? perpetratorLocation : null,
               contact_info: contactInfo,
               notification_preferences: Array.from(notificationPreferences),
               identity_preference: identityPreference,

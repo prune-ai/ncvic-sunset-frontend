@@ -56,6 +56,12 @@
   body {
     @apply bg-background text-foreground;
   }
+  button:focus {
+    outline: none;
+  }
+  button:focus-visible {
+    outline: none;
+  }
 }
 
 @layer utilities {

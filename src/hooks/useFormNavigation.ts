@@ -33,3 +33,4 @@ export function useFormNavigation(totalPages: number) {
     isLastPage,
   };
 }
+
