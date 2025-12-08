@@ -8,6 +8,8 @@ import {
   EvidenceSection,
   type UploadedFile,
 } from "../components/ui/EvidenceSection";
+import { TextUploadArea } from "../components/ui/TextUploadArea";
+import { URLUploadArea } from "../components/ui/URLUploadArea";
 import { WarningIcon, SearchIcon } from "../components/ui/icons";
 
 interface AddEvidencePageProps {
@@ -30,6 +32,12 @@ export function AddEvidencePage({
   );
   const [removeFiles, setRemoveFiles] = useState<UploadedFile[]>([]);
   const [searchFiles, setSearchFiles] = useState<UploadedFile[]>([]);
+  const [textKeywords, setTextKeywords] = useState<string[]>(
+    (initialData?.text_keywords as string[]) || [],
+  );
+  const [urls, setUrls] = useState<string[]>(
+    (initialData?.urls as string[]) || [],
+  );
 
   const handleRemoveFilesSelected = (files: FileList) => {
     const newFiles: UploadedFile[] = Array.from(files).map((file) => {
@@ -106,6 +114,38 @@ export function AddEvidencePage({
               />
             </div>
           )}
+
+          {/* URLs upload section */}
+          {activeTab === "urls" && (
+            <div className="flex flex-col gap-2 w-full">
+              <URLUploadArea urls={urls} onUrlsChange={setUrls} />
+            </div>
+          )}
+
+          {/* Text upload section */}
+          {activeTab === "text" && (
+            <div className="flex flex-col gap-3 w-full">
+              <div className="flex flex-col gap-3 w-full">
+                <h3 className="text-lg font-semibold leading-[1.25] text-white whitespace-pre-wrap">
+                  Add keywords you've used to find your content on search engines
+                  or specific platforms.
+                </h3>
+                <p className="text-xs font-normal leading-[1.25] text-zinc-200 whitespace-pre-wrap">
+                  If your images and videos are associated with a known group, or
+                  are part of a known series, or you they are being shared on
+                  specific types of sites, any text you can provide will greatly
+                  increase our chances of finding and removing your content.
+                  <br />
+                  <br />
+                  Ex: your name leak, username 123...
+                </p>
+              </div>
+              <TextUploadArea
+                keywords={textKeywords}
+                onKeywordsChange={setTextKeywords}
+              />
+            </div>
+          )}
         </div>
       </div>
 
@@ -120,6 +160,8 @@ export function AddEvidencePage({
             evidence_type: activeTab,
             remove_files_count: removeFiles.length,
             search_files_count: searchFiles.length,
+            text_keywords: textKeywords,
+            urls: urls,
             // Note: Actual file uploads will need to be handled via FormData
             // when the backend file upload endpoint is ready
           });

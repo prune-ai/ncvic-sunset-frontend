@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import { ImageUploadIcon } from "./icons";
 
 interface ImageUploadAreaProps {
   onFilesSelected: (files: FileList) => void;
@@ -65,8 +64,12 @@ export function ImageUploadArea({
           }
         }}
       >
-        <div className="shrink-0 w-8 h-8">
-          <ImageUploadIcon />
+        <div className="shrink-0 w-[27px] h-[27px]">
+          <img
+            src="/upload icon.svg"
+            alt="Upload icon"
+            className="w-full h-full"
+          />
         </div>
         <div className="flex flex-col gap-2 items-center text-white whitespace-nowrap">
           <p className="text-sm font-medium leading-[1.45]">

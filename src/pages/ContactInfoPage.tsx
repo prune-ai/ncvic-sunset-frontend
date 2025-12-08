@@ -82,7 +82,7 @@ export function ContactInfoPage({
             title="Where are you located?"
             description="This helps us understand which laws apply and which law enforcement agencies can assist."
           />
-          <div className="flex gap-2 w-full">
+          <div className="flex flex-col lg:flex-row gap-2 w-full">
             <SelectDropdown
               options={COUNTRIES}
               value={userLocation.country}
@@ -132,7 +132,7 @@ export function ContactInfoPage({
 
           {/* Conditional location fields */}
           {knowsPerpetratorLocation === "yes" && (
-            <div className="flex gap-2 w-full">
+            <div className="flex flex-col lg:flex-row gap-2 w-full">
               <SelectDropdown
                 options={COUNTRIES}
                 value={perpetratorLocation.country}
