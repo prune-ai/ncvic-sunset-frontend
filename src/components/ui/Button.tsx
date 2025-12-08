@@ -22,10 +22,26 @@ export function Button({
     secondary: "bg-gray-900/20 text-white",
   };
 
+  const handleInteraction = (e: React.MouseEvent | React.KeyboardEvent) => {
+    if (disabled) return;
+    if (e.type === "mousedown") {
+      e.preventDefault(); // Prevent text selection
+    }
+    if (e.type === "keydown") {
+      const keyEvent = e as React.KeyboardEvent;
+      if (keyEvent.key !== "Enter" && keyEvent.key !== " ") {
+        return;
+      }
+      e.preventDefault();
+    }
+    onClick?.();
+  };
+
   return (
     <button
       type={type}
-      onClick={onClick}
+      onMouseDown={handleInteraction}
+      onKeyDown={handleInteraction}
       disabled={disabled}
       className={`${baseStyles} ${variantStyles[variant]} ${
         disabled

@@ -58,9 +58,30 @@
   }
   button:focus {
     outline: none;
+    box-shadow: none;
   }
   button:focus-visible {
     outline: none;
+    box-shadow: none;
+  }
+  /* Remove all borders and outlines from radio buttons on focus/active */
+  button[role="radio"]:focus,
+  button[role="radio"]:focus-visible,
+  button[role="radio"]:active,
+  button[role="radio"]:focus-within {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  /* Only show border when selected */
+  button[role="radio"][aria-checked="true"] {
+    border: 1px solid #b894ee !important;
+  }
+  button[role="radio"][aria-checked="false"] {
+    border: none !important;
+  }
+  /* Remove any default browser styling */
+  button[role="radio"] {
+    -webkit-tap-highlight-color: transparent;
   }
 }
 

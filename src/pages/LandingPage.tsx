@@ -1,3 +1,5 @@
+import { Button } from "../components/ui/Button";
+
 interface LandingPageProps {
   onStartCase: () => void;
   onLearnMore?: () => void;
@@ -83,22 +85,19 @@ export function LandingPage({ onStartCase, onLearnMore }: LandingPageProps) {
 
           {/* Action buttons */}
           <div className="flex gap-6 lg:gap-[24px] items-center w-full">
-            <button
+            <Button
               onClick={onStartCase}
-              className="bg-[#8be784] flex flex-1 lg:flex-none gap-[8px] items-center justify-center px-[32px] py-[16px] rounded-[12px] shadow-[6px_6px_0px_0px_#d09fba] hover:opacity-90 active:opacity-75 transition-opacity cursor-pointer min-h-[44px]"
+              variant="primary"
+              className="flex-1 lg:flex-none shadow-[6px_6px_0px_0px_#d09fba]"
             >
-              <span className="text-[14px] font-semibold leading-[1.25] text-center text-white whitespace-nowrap">
-                Start My Case
-              </span>
-            </button>
-            <button
+              Start My Case
+            </Button>
+            <Button
               onClick={onLearnMore}
-              className="bg-[#b894ee] flex flex-1 lg:flex-none gap-[8px] items-center justify-center px-[32px] py-[16px] rounded-[12px] shadow-[6px_6px_0px_0px_#8be784] hover:opacity-90 active:opacity-75 transition-opacity cursor-pointer min-h-[44px]"
+              className="flex-1 lg:flex-none bg-[#b894ee] shadow-[6px_6px_0px_0px_#8be784]"
             >
-              <span className="text-[14px] font-semibold leading-[1.25] text-center text-white whitespace-nowrap">
-                Learn More
-              </span>
-            </button>
+              Learn More
+            </Button>
           </div>
         </div>
       </div>

@@ -1,15 +1,19 @@
 import { useState } from "react";
 import { FormContainer } from "../components/layout/FormContainer";
+import { FormNavigation } from "../components/layout/FormNavigation";
 import { ButtonGroup } from "../components/ui/ButtonGroup";
 import { RadioOption } from "../components/ui/RadioOption";
-import { Button } from "../components/ui/Button";
 import { CheckboxOption } from "../components/ui/CheckboxOption";
+import { ErrorMessage } from "../components/ui/ErrorMessage";
+import { SectionHeader } from "../components/ui/SectionHeader";
+import { useSetHandler } from "../hooks/useSetHandler";
 
 interface StartCasePageProps {
   onBack: () => void;
   onNext: (pageData: Record<string, unknown>) => void;
   isLoading?: boolean;
   error?: string;
+  initialData?: Record<string, unknown>;
 }
 
 export function StartCasePage({
@@ -17,41 +21,36 @@ export function StartCasePage({
   onNext,
   isLoading = false,
   error,
+  initialData,
 }: StartCasePageProps) {
-  const [over18, setOver18] = useState<string | null>(null);
-  const [ageInContent, setAgeInContent] = useState<string>("");
-  const [reportingFor, setReportingFor] = useState<Set<string>>(new Set());
-  const [sexualContent, setSexualContent] = useState<Set<string>>(new Set());
-  const [otherSexualHarm, setOtherSexualHarm] = useState<string>("");
+  const [over18, setOver18] = useState<string | null>(
+    initialData?.over_18 === true ? "yes" : initialData?.over_18 === false ? "no" : null,
+  );
+  const [ageInContent, setAgeInContent] = useState<string>(
+    (initialData?.age_in_content as string) || "",
+  );
+  const [reportingFor, setReportingFor] = useState<Set<string>>(
+    new Set((initialData?.reporting_for as string[]) || []),
+  );
+  const [sexualContent, setSexualContent] = useState<Set<string>>(
+    new Set((initialData?.sexual_content as string[]) || []),
+  );
+  const [otherSexualHarm, setOtherSexualHarm] = useState<string>(
+    (initialData?.other_sexual_harm as string) || "",
+  );
 
-  const handleReportingForChange = (value: string) => (checked: boolean) => {
-    const newSet = new Set(reportingFor);
-    if (checked) {
-      newSet.add(value);
-    } else {
-      newSet.delete(value);
-    }
-    setReportingFor(newSet);
-  };
-
-  const handleSexualContentChange = (value: string) => (checked: boolean) => {
-    const newSet = new Set(sexualContent);
-    if (checked) {
-      newSet.add(value);
-    } else {
-      newSet.delete(value);
-    }
-    setSexualContent(newSet);
-  };
+  const handleReportingForChange = useSetHandler(reportingFor, setReportingFor);
+  const handleSexualContentChange = useSetHandler(
+    sexualContent,
+    setSexualContent,
+  );
 
   return (
     <FormContainer title="Start your case" currentStep={1} totalSteps={5}>
       <div className="flex flex-col gap-4 lg:gap-[20px] w-full">
         {/* Are you over 18? */}
         <div className="flex flex-col gap-3 lg:gap-[16px] w-full">
-          <h2 className="text-white text-base lg:text-lg font-semibold leading-[1.25]">
-            Are you over 18?
-          </h2>
+          <SectionHeader title="Are you over 18?" />
           <ButtonGroup
             options={[
               { value: "yes", label: "Yes" },
@@ -64,9 +63,7 @@ export function StartCasePage({
 
         {/* How old were you in the images/videos? */}
         <div className="flex flex-col gap-3 lg:gap-[16px] w-full">
-          <h2 className="text-white text-base lg:text-lg font-semibold leading-[1.25]">
-            How old were you in the images/videos?
-          </h2>
+          <SectionHeader title="How old were you in the images/videos?" />
           <div className="flex flex-col gap-2 w-full">
             <RadioOption
               label="Under 18"
@@ -101,9 +98,7 @@ export function StartCasePage({
 
         {/* Who are you reporting for? */}
         <div className="flex flex-col gap-3 lg:gap-[16px] w-full">
-          <h2 className="text-white text-base lg:text-lg font-semibold leading-[1.25] whitespace-pre-wrap">
-            Who are you reporting for?
-          </h2>
+          <SectionHeader title="Who are you reporting for?" />
           <div className="flex flex-col gap-0 w-full">
             <CheckboxOption
               label="I am reporting for myself"
@@ -135,9 +130,7 @@ export function StartCasePage({
 
         {/* Is the content sexual or sexualized? */}
         <div className="flex flex-col gap-3 lg:gap-[16px] w-full">
-          <h2 className="text-white text-base lg:text-lg font-semibold leading-[1.25] whitespace-pre-wrap">
-            Is the content sexual or sexualized?
-          </h2>
+          <SectionHeader title="Is the content sexual or sexualized?" />
           <div className="flex flex-col gap-0 w-full">
             <CheckboxOption
               label="Nude or partially nude images"
@@ -182,39 +175,26 @@ export function StartCasePage({
         </div>
       </div>
 
-      {/* Error message */}
-      {error && <div className="text-red-400 text-sm mt-4">{error}</div>}
+      <ErrorMessage message={error} />
 
-      {/* Navigation buttons */}
-      <div className="flex items-center justify-between gap-2 w-full mt-4">
-        <Button
-          onClick={onBack}
-          className="flex-1 lg:flex-none"
-          disabled={isLoading}
-        >
-          Back
-        </Button>
-        <Button
-          onClick={() => {
-            onNext({
-              over_18: over18 === "yes" ? true : over18 === "no" ? false : null,
-              age_in_content: ageInContent,
-              reporting_for: reportingFor,
-              sexual_content: sexualContent,
-              other_sexual_harm: otherSexualHarm || null,
-            });
-          }}
-          className="flex-1 lg:flex-none"
-          disabled={
-            isLoading ||
-            !ageInContent ||
-            reportingFor.size === 0 ||
-            sexualContent.size === 0
-          }
-        >
-          {isLoading ? "Saving..." : "Next"}
-        </Button>
-      </div>
+      <FormNavigation
+        onBack={onBack}
+        onNext={() => {
+          onNext({
+            over_18: over18 === "yes" ? true : over18 === "no" ? false : null,
+            age_in_content: ageInContent,
+            reporting_for: Array.from(reportingFor),
+            sexual_content: Array.from(sexualContent),
+            other_sexual_harm: otherSexualHarm || null,
+          });
+        }}
+        isLoading={isLoading}
+        disabled={
+          !ageInContent ||
+          reportingFor.size === 0 ||
+          sexualContent.size === 0
+        }
+      />
     </FormContainer>
   );
 }

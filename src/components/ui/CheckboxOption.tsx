@@ -1,3 +1,5 @@
+import { CheckIcon } from "./icons";
+
 interface CheckboxOptionProps {
   label: string;
   checked: boolean;
@@ -8,24 +10,6 @@ interface CheckboxOptionProps {
   inputPlaceholder?: string;
   inputPosition?: "inline" | "below"; // New prop to control input placement
 }
-
-const CheckIcon = () => (
-  <svg
-    width="14"
-    height="14"
-    viewBox="0 0 14 14"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M11.6667 3.5L5.25 9.91667L2.33333 7"
-      stroke="white"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
 
 export function CheckboxOption({
   label,
@@ -39,23 +23,42 @@ export function CheckboxOption({
 }: CheckboxOptionProps) {
   const isInputBelow = inputPosition === "below";
 
+  const handleInteraction = (e: React.MouseEvent | React.KeyboardEvent) => {
+    if (e.type === "mousedown") {
+      e.preventDefault(); // Prevent text selection
+    }
+    if (e.type === "keydown") {
+      const keyEvent = e as React.KeyboardEvent;
+      if (keyEvent.key !== "Enter" && keyEvent.key !== " ") {
+        return;
+      }
+      e.preventDefault();
+    }
+    onChange(!checked);
+  };
+
   return (
     <div className={`flex flex-col gap-2.5 w-full ${isInputBelow ? "" : ""}`}>
       <div
-        onClick={() => onChange(!checked)}
-        className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
+        onMouseDown={handleInteraction}
+        onKeyDown={handleInteraction}
+        tabIndex={0}
+        role="checkbox"
+        aria-checked={checked}
+        className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 focus:outline-none focus:ring-2 focus:ring-[#b894ee]"
       >
         <button
           type="button"
-          onClick={(e) => {
+          onMouseDown={(e) => {
             e.stopPropagation();
-            onChange(!checked);
+            handleInteraction(e);
           }}
-          className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
+          className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 focus:outline-none pointer-events-none ${
             checked ? "bg-[#b894ee]" : "bg-white/10"
           }`}
           aria-checked={checked}
           role="checkbox"
+          tabIndex={-1}
         >
           {checked && <CheckIcon />}
         </button>

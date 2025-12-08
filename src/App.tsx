@@ -16,6 +16,8 @@ function App() {
   const [caseNumber, setCaseNumber] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
+  // Store form data for each page to restore on back navigation
+  const [savedPageData, setSavedPageData] = useState<Record<number, Record<string, unknown>>>({});
 
   const handleStartCase = async () => {
     setCurrentPage(1); // Navigate to page 1 of the form immediately
@@ -33,6 +35,14 @@ function App() {
     try {
       setIsLoading(true);
       setError(undefined);
+
+      // Save page data locally for restoration on back navigation
+      if (pageData) {
+        setSavedPageData((prev) => ({
+          ...prev,
+          [currentPage]: pageData,
+        }));
+      }
 
       // If we're on page 1, start the intake form
       if (currentPage === 1 && !formId && pageData) {
@@ -71,8 +81,12 @@ function App() {
         throw new Error("Form ID not found");
       }
 
-      // Save page 5 data if provided
+      // Save page 5 data locally and to backend
       if (pageData) {
+        setSavedPageData((prev) => ({
+          ...prev,
+          [5]: pageData,
+        }));
         await api.savePage(formId, 5, pageData);
       }
 
@@ -128,6 +142,7 @@ function App() {
             onNext={handleNext}
             isLoading={isLoading}
             error={error}
+            initialData={savedPageData[1]}
           />
         );
       case 2:
@@ -137,6 +152,7 @@ function App() {
             onNext={handleNext}
             isLoading={isLoading}
             error={error}
+            initialData={savedPageData[2]}
           />
         );
       case 3:
@@ -146,6 +162,7 @@ function App() {
             onNext={handleNext}
             isLoading={isLoading}
             error={error}
+            initialData={savedPageData[3]}
           />
         );
       case 4:
@@ -155,6 +172,7 @@ function App() {
             onNext={handleNext}
             isLoading={isLoading}
             error={error}
+            initialData={savedPageData[4]}
           />
         );
       case 5:
@@ -164,6 +182,7 @@ function App() {
             onSubmit={handleSubmit}
             isLoading={isLoading}
             error={error}
+            initialData={savedPageData[5]}
           />
         );
       case 6:
