@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FormContainer } from "../components/layout/FormContainer";
 import { ButtonGroup } from "../components/ui/ButtonGroup";
 import { Button } from "../components/ui/Button";
+import { CheckboxOption } from "../components/ui/CheckboxOption";
 
 interface WhatHappenedPageProps {
   onBack: () => void;
@@ -9,24 +10,6 @@ interface WhatHappenedPageProps {
   isLoading?: boolean;
   error?: string;
 }
-
-const CheckIcon = () => (
-  <svg
-    width="14"
-    height="14"
-    viewBox="0 0 14 14"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M11.6667 3.5L5.25 9.91667L2.33333 7"
-      stroke="white"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
 
 export function WhatHappenedPage({
   onBack,
@@ -38,12 +21,12 @@ export function WhatHappenedPage({
   const [knowsWhoPosted, setKnowsWhoPosted] = useState<string | null>(null);
   const [whoPosted, setWhoPosted] = useState<Set<string>>(new Set());
 
-  const handleWhatHappenedChange = (value: string) => {
+  const handleWhatHappenedChange = (value: string) => (checked: boolean) => {
     const newSet = new Set(whatHappened);
-    if (newSet.has(value)) {
-      newSet.delete(value);
-    } else {
+    if (checked) {
       newSet.add(value);
+    } else {
+      newSet.delete(value);
     }
     setWhatHappened(newSet);
   };
@@ -67,244 +50,56 @@ export function WhatHappenedPage({
             What happened?
           </h2>
           <div className="flex flex-col gap-0 w-full">
-            <div
-              onClick={() => handleWhatHappenedChange("postedWithoutConsent")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleWhatHappenedChange("postedWithoutConsent");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  whatHappened.has("postedWithoutConsent")
-                    ? "bg-[#b894ee]"
-                    : "bg-white/10"
-                }`}
-                aria-checked={whatHappened.has("postedWithoutConsent")}
-                role="checkbox"
-              >
-                {whatHappened.has("postedWithoutConsent") && <CheckIcon />}
-              </button>
-              <span className="text-sm font-medium leading-[1.25] text-white">
-                Images/videos posted without consent
-              </span>
-            </div>
-            <div
-              onClick={() => handleWhatHappenedChange("threatsExtortion")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleWhatHappenedChange("threatsExtortion");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  whatHappened.has("threatsExtortion")
-                    ? "bg-[#b894ee]"
-                    : "bg-white/10"
-                }`}
-                aria-checked={whatHappened.has("threatsExtortion")}
-                role="checkbox"
-              >
-                {whatHappened.has("threatsExtortion") && <CheckIcon />}
-              </button>
-              <span className="text-sm font-medium leading-[1.25] text-white">
-                Threats/extortion (sextortion)
-              </span>
-            </div>
-            <div
-              onClick={() => handleWhatHappenedChange("coercionGrooming")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleWhatHappenedChange("coercionGrooming");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  whatHappened.has("coercionGrooming")
-                    ? "bg-[#b894ee]"
-                    : "bg-white/10"
-                }`}
-                aria-checked={whatHappened.has("coercionGrooming")}
-                role="checkbox"
-              >
-                {whatHappened.has("coercionGrooming") && <CheckIcon />}
-              </button>
-              <span className="text-sm font-medium leading-[1.25] text-white">
-                Coercion, grooming, blackmail
-              </span>
-            </div>
-            <div
-              onClick={() => handleWhatHappenedChange("hiddenCamera")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleWhatHappenedChange("hiddenCamera");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  whatHappened.has("hiddenCamera")
-                    ? "bg-[#b894ee]"
-                    : "bg-white/10"
-                }`}
-                aria-checked={whatHappened.has("hiddenCamera")}
-                role="checkbox"
-              >
-                {whatHappened.has("hiddenCamera") && <CheckIcon />}
-              </button>
-              <span className="text-sm font-medium leading-[1.25] text-white">
-                Hidden camera, spyware
-              </span>
-            </div>
-            <div
-              onClick={() => handleWhatHappenedChange("revengeAbuse")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleWhatHappenedChange("revengeAbuse");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  whatHappened.has("revengeAbuse")
-                    ? "bg-[#b894ee]"
-                    : "bg-white/10"
-                }`}
-                aria-checked={whatHappened.has("revengeAbuse")}
-                role="checkbox"
-              >
-                {whatHappened.has("revengeAbuse") && <CheckIcon />}
-              </button>
-              <span className="text-sm font-medium leading-[1.25] text-white">
-                Revenge abuse by partner/ex
-              </span>
-            </div>
-            <div
-              onClick={() => handleWhatHappenedChange("sexTrafficking")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleWhatHappenedChange("sexTrafficking");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  whatHappened.has("sexTrafficking")
-                    ? "bg-[#b894ee]"
-                    : "bg-white/10"
-                }`}
-                aria-checked={whatHappened.has("sexTrafficking")}
-                role="checkbox"
-              >
-                {whatHappened.has("sexTrafficking") && <CheckIcon />}
-              </button>
-              <span className="flex-1 text-sm font-medium leading-[1.25] text-white whitespace-pre-wrap">
-                Sex trafficking
-              </span>
-            </div>
-            <div
-              onClick={() => handleWhatHappenedChange("hackedStolen")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleWhatHappenedChange("hackedStolen");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  whatHappened.has("hackedStolen")
-                    ? "bg-[#b894ee]"
-                    : "bg-white/10"
-                }`}
-                aria-checked={whatHappened.has("hackedStolen")}
-                role="checkbox"
-              >
-                {whatHappened.has("hackedStolen") && <CheckIcon />}
-              </button>
-              <span className="flex-1 text-sm font-medium leading-[1.25] text-white whitespace-pre-wrap">
-                Hacked or stolen images
-              </span>
-            </div>
-            <div
-              onClick={() => handleWhatHappenedChange("deepfakeAbuse")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleWhatHappenedChange("deepfakeAbuse");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  whatHappened.has("deepfakeAbuse")
-                    ? "bg-[#b894ee]"
-                    : "bg-white/10"
-                }`}
-                aria-checked={whatHappened.has("deepfakeAbuse")}
-                role="checkbox"
-              >
-                {whatHappened.has("deepfakeAbuse") && <CheckIcon />}
-              </button>
-              <span className="flex-1 text-sm font-medium leading-[1.25] text-white whitespace-pre-wrap">
-                Deepfake abuse
-              </span>
-            </div>
-            <div
-              onClick={() => handleWhatHappenedChange("federalCase")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleWhatHappenedChange("federalCase");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  whatHappened.has("federalCase")
-                    ? "bg-[#b894ee]"
-                    : "bg-white/10"
-                }`}
-                aria-checked={whatHappened.has("federalCase")}
-                role="checkbox"
-              >
-                {whatHappened.has("federalCase") && <CheckIcon />}
-              </button>
-              <span className="flex-1 text-sm font-medium leading-[1.25] text-white whitespace-pre-wrap">
-                Known federal case: Please describe briefly (text)
-              </span>
-            </div>
-            <div
-              onClick={() => handleWhatHappenedChange("other")}
-              className="flex items-center gap-2 pl-4 pr-0 py-3 rounded-xl w-full cursor-pointer hover:bg-gray-900/20 transition-colors"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleWhatHappenedChange("other");
-                }}
-                className={`flex items-center justify-center rounded-md shrink-0 w-5 h-5 transition-colors focus:outline-none pointer-events-none ${
-                  whatHappened.has("other") ? "bg-[#b894ee]" : "bg-white/10"
-                }`}
-                aria-checked={whatHappened.has("other")}
-                role="checkbox"
-              >
-                {whatHappened.has("other") && <CheckIcon />}
-              </button>
-              <span className="flex-1 text-sm font-medium leading-[1.25] text-white whitespace-pre-wrap">
-                Other: Type text
-              </span>
-            </div>
+            <CheckboxOption
+              label="Images/videos posted without consent"
+              checked={whatHappened.has("postedWithoutConsent")}
+              onChange={handleWhatHappenedChange("postedWithoutConsent")}
+            />
+            <CheckboxOption
+              label="Threats/extortion (sextortion)"
+              checked={whatHappened.has("threatsExtortion")}
+              onChange={handleWhatHappenedChange("threatsExtortion")}
+            />
+            <CheckboxOption
+              label="Coercion, grooming, blackmail"
+              checked={whatHappened.has("coercionGrooming")}
+              onChange={handleWhatHappenedChange("coercionGrooming")}
+            />
+            <CheckboxOption
+              label="Hidden camera, spyware"
+              checked={whatHappened.has("hiddenCamera")}
+              onChange={handleWhatHappenedChange("hiddenCamera")}
+            />
+            <CheckboxOption
+              label="Revenge abuse by partner/ex"
+              checked={whatHappened.has("revengeAbuse")}
+              onChange={handleWhatHappenedChange("revengeAbuse")}
+            />
+            <CheckboxOption
+              label="Sex trafficking"
+              checked={whatHappened.has("sexTrafficking")}
+              onChange={handleWhatHappenedChange("sexTrafficking")}
+            />
+            <CheckboxOption
+              label="Hacked or stolen images"
+              checked={whatHappened.has("hackedStolen")}
+              onChange={handleWhatHappenedChange("hackedStolen")}
+            />
+            <CheckboxOption
+              label="Deepfake abuse"
+              checked={whatHappened.has("deepfakeAbuse")}
+              onChange={handleWhatHappenedChange("deepfakeAbuse")}
+            />
+            <CheckboxOption
+              label="Known federal case: Please describe briefly (text)"
+              checked={whatHappened.has("federalCase")}
+              onChange={handleWhatHappenedChange("federalCase")}
+            />
+            <CheckboxOption
+              label="Other: Type text"
+              checked={whatHappened.has("other")}
+              onChange={handleWhatHappenedChange("other")}
+            />
           </div>
         </div>
 
