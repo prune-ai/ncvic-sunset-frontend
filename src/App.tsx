@@ -32,7 +32,7 @@ function App() {
   });
   const [showStartOverModal, setShowStartOverModal] = useState(false);
 
-  const handleStartCase = async () => {
+  const handleStartCase = () => {
     setCurrentPage(1); // Navigate to page 1 of the form immediately
   };
 
@@ -189,7 +189,7 @@ function App() {
         return (
           <StartCasePage
             onBack={handleBack}
-            onNext={handleNext}
+            onNext={(pageData) => void handleNext(pageData)}
             isLoading={isLoading}
             error={error}
             initialData={savedPageData[1]}
@@ -199,7 +199,7 @@ function App() {
         return (
           <WhatHappenedPage
             onBack={handleBack}
-            onNext={handleNext}
+            onNext={(pageData) => void handleNext(pageData)}
             isLoading={isLoading}
             error={error}
             initialData={savedPageData[2]}
@@ -209,7 +209,7 @@ function App() {
         return (
           <AddEvidencePage
             onBack={handleBack}
-            onNext={handleNext}
+            onNext={(pageData) => void handleNext(pageData)}
             isLoading={isLoading}
             error={error}
             initialData={savedPageData[3]}
@@ -222,7 +222,7 @@ function App() {
         return (
           <ContactInfoPage
             onBack={handleBack}
-            onNext={handleNext}
+            onNext={(pageData) => void handleNext(pageData)}
             isLoading={isLoading}
             error={error}
             initialData={savedPageData[4]}
@@ -232,7 +232,7 @@ function App() {
         return (
           <ConsentsPage
             onBack={handleBack}
-            onSubmit={handleSubmit}
+            onSubmit={(pageData) => void handleSubmit(pageData)}
             isLoading={isLoading}
             error={error}
             initialData={savedPageData[5]}

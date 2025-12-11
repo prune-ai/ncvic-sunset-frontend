@@ -1,4 +1,4 @@
-import { useState, useRef, KeyboardEvent, ChangeEvent, useEffect } from "react";
+import { useState, useRef, KeyboardEvent, ChangeEvent } from "react";
 
 interface URLUploadAreaProps {
   urls: string[];
@@ -11,15 +11,11 @@ export function URLUploadArea({
   onUrlsChange,
   placeholder = "Type Here",
 }: URLUploadAreaProps) {
-  const [textareaValue, setTextareaValue] = useState("");
+  const [textareaValue, setTextareaValue] = useState(() => {
+    // Initialize textarea value from URLs prop if provided
+    return urls.length > 0 ? urls.join("\n") : "";
+  });
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  // Initialize textarea value from URLs prop if provided
-  useEffect(() => {
-    if (urls.length > 0 && !textareaValue) {
-      setTextareaValue(urls.join("\n"));
-    }
-  }, []);
 
   const parseUrls = (text: string): string[] => {
     // Split by newlines, filter empty strings, and trim each URL
@@ -70,7 +66,7 @@ export function URLUploadArea({
     // Shift+Enter is handled by default browser behavior (creates new line)
   };
 
-  const handlePaste = (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
+  const handlePaste = (_e: React.ClipboardEvent<HTMLTextAreaElement>) => {
     // Allow paste, then parse URLs after paste completes
     setTimeout(() => {
       const value = textareaRef.current?.value || "";

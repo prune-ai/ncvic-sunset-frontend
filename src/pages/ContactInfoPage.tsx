@@ -8,7 +8,7 @@ import { ErrorMessage } from "../components/ui/ErrorMessage";
 import { RadioOption } from "../components/ui/RadioOption";
 import { SectionHeader } from "../components/ui/SectionHeader";
 import { SelectDropdown } from "../components/ui/SelectDropdown";
-import { useSetHandler } from "../hooks/useSetHandler";
+import { useSetHandler } from "../hooks/use-set-handler";
 import { US_STATES, COUNTRIES } from "../lib/constants";
 
 interface ContactInfoPageProps {

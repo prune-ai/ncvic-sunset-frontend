@@ -44,10 +44,10 @@ export function AddEvidencePage({
   const [activeTab, setActiveTab] = useState<"images" | "urls" | "text">(
     (initialData?.evidence_type as "images" | "urls" | "text") || "images"
   );
-  const [removeFiles, setRemoveFiles] = useState<UploadedFile[]>(
+  const [removeFiles, setRemoveFiles] = useState<UploadedFile[]>(() => 
     evidenceFiles.removeFiles || []
   );
-  const [searchFiles, setSearchFiles] = useState<UploadedFile[]>(
+  const [searchFiles, setSearchFiles] = useState<UploadedFile[]>(() =>
     evidenceFiles.searchFiles || []
   );
   const [textKeywords, setTextKeywords] = useState<string[]>(
@@ -56,12 +56,6 @@ export function AddEvidencePage({
   const [urls, setUrls] = useState<string[]>(
     (initialData?.urls as string[]) || []
   );
-
-  // Sync local file state with parent state
-  useEffect(() => {
-    setRemoveFiles(evidenceFiles.removeFiles || []);
-    setSearchFiles(evidenceFiles.searchFiles || []);
-  }, [evidenceFiles]);
 
   // Update parent state when files change
   useEffect(() => {
@@ -159,12 +153,12 @@ export function AddEvidencePage({
             <div className="flex flex-col gap-3 w-full">
               <div className="flex flex-col gap-3 w-full">
                 <h3 className="text-lg font-semibold leading-[1.25] text-white whitespace-pre-wrap">
-                  Add keywords you've used to find your content on search
+                  Add keywords you&apos;ve used to find your content on search
                   engines or specific platforms.
                 </h3>
                 <p className="text-xs font-normal leading-[1.25] text-zinc-200 whitespace-pre-wrap">
                   If your images and videos are associated with a known group,
-                  or are part of a known series, or you they are being shared on
+                  or are part of a known series, or they are being shared on
                   specific types of sites, any text you can provide will greatly
                   increase our chances of finding and removing your content.
                   <br />
@@ -185,7 +179,7 @@ export function AddEvidencePage({
 
       <FormNavigation
         onBack={onBack}
-        onNext={async () => {
+        onNext={() => void (async () => {
           // Upload files if formId is available
           if (formId) {
             console.log(`[AddEvidencePage] Uploading files for form ${formId}`);
@@ -302,7 +296,7 @@ export function AddEvidencePage({
             text_keywords: textKeywords,
             urls: urls,
           });
-        }}
+        })()}
         isLoading={isLoading}
       />
     </FormContainer>

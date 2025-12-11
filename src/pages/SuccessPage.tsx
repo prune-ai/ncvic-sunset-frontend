@@ -14,7 +14,7 @@ export function SuccessPage({
   caseId = "CASE-12345", // Placeholder until backend integration
 }: SuccessPageProps) {
   const handleCopyCaseId = () => {
-    navigator.clipboard.writeText(caseId);
+    void navigator.clipboard.writeText(caseId);
     onCopyCaseId?.();
   };
 
