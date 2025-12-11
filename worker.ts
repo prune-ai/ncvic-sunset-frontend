@@ -12,7 +12,7 @@ export default {
     const url = new URL(request.url);
 
     // Try to get the asset from the assets binding
-    let asset = await env.ASSETS.fetch(request);
+    const asset = await env.ASSETS.fetch(request);
 
     // If the asset exists, return it
     if (asset.status !== 404) {

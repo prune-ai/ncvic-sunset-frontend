@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+
 import { FooterLink } from "../ui/FooterLink";
 import { VideoBackground } from "../ui/VideoBackground";
 

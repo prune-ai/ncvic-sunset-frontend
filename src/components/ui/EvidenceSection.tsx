@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
-import { ImageUploadArea } from "./ImageUploadArea";
+
 import { ImageThumbnail } from "./ImageThumbnail";
+import { ImageUploadArea } from "./ImageUploadArea";
 
 export interface UploadedFile {
   id: string;

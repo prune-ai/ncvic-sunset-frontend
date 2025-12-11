@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
+
 import { FormContainer } from "../components/layout/FormContainer";
 import { FormNavigation } from "../components/layout/FormNavigation";
 import { ErrorMessage } from "../components/ui/ErrorMessage";
-import { SectionHeader } from "../components/ui/SectionHeader";
-import { EvidenceTypeTabs } from "../components/ui/EvidenceTypeTabs";
 import {
   EvidenceSection,
   type UploadedFile,
 } from "../components/ui/EvidenceSection";
+import { EvidenceTypeTabs } from "../components/ui/EvidenceTypeTabs";
+import { WarningIcon, SearchIcon } from "../components/ui/icons";
+import { SectionHeader } from "../components/ui/SectionHeader";
 import { TextUploadArea } from "../components/ui/TextUploadArea";
 import { URLUploadArea } from "../components/ui/URLUploadArea";
-import { WarningIcon, SearchIcon } from "../components/ui/icons";
 import { api } from "../lib/api";
 
 interface AddEvidencePageProps {
