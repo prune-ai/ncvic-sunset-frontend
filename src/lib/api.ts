@@ -29,7 +29,9 @@ async function handleResponse<T>(response: Response): Promise<T> {
     try {
       const errorData = (await response.json()) as ApiError;
       errorDetail =
-        errorData.detail || (errorData as { message?: string }).message || response.statusText;
+        errorData.detail ||
+        (errorData as { message?: string }).message ||
+        response.statusText;
     } catch {
       errorDetail = response.statusText;
     }

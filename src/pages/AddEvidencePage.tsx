@@ -44,11 +44,11 @@ export function AddEvidencePage({
   const [activeTab, setActiveTab] = useState<"images" | "urls" | "text">(
     (initialData?.evidence_type as "images" | "urls" | "text") || "images"
   );
-  const [removeFiles, setRemoveFiles] = useState<UploadedFile[]>(() => 
-    evidenceFiles.removeFiles || []
+  const [removeFiles, setRemoveFiles] = useState<UploadedFile[]>(
+    () => evidenceFiles.removeFiles || []
   );
-  const [searchFiles, setSearchFiles] = useState<UploadedFile[]>(() =>
-    evidenceFiles.searchFiles || []
+  const [searchFiles, setSearchFiles] = useState<UploadedFile[]>(
+    () => evidenceFiles.searchFiles || []
   );
   const [textKeywords, setTextKeywords] = useState<string[]>(
     (initialData?.text_keywords as string[]) || []
@@ -179,124 +179,130 @@ export function AddEvidencePage({
 
       <FormNavigation
         onBack={onBack}
-        onNext={() => void (async () => {
-          // Upload files if formId is available
-          if (formId) {
-            console.log(`[AddEvidencePage] Uploading files for form ${formId}`);
-            console.log(
-              `[AddEvidencePage] Remove files: ${removeFiles.length}, Search files: ${searchFiles.length}`
-            );
-
-            // Upload remove files
-            for (const uploadedFile of removeFiles) {
-              try {
-                console.log(
-                  `[AddEvidencePage] Uploading remove file: ${uploadedFile.file.name}`
-                );
-                await api.uploadEvidenceFile(
-                  formId,
-                  uploadedFile.file,
-                  "remove"
-                );
-                console.log(
-                  `[AddEvidencePage] Successfully uploaded remove file`
-                );
-              } catch (err) {
-                console.error(
-                  "[AddEvidencePage] Error uploading remove file:",
-                  err
-                );
-                // Continue with other files even if one fails
-              }
-            }
-
-            // Upload search files
-            for (const uploadedFile of searchFiles) {
-              try {
-                console.log(
-                  `[AddEvidencePage] Uploading search file: ${uploadedFile.file.name}`
-                );
-                await api.uploadEvidenceFile(
-                  formId,
-                  uploadedFile.file,
-                  "search"
-                );
-                console.log(
-                  `[AddEvidencePage] Successfully uploaded search file`
-                );
-              } catch (err) {
-                console.error(
-                  "[AddEvidencePage] Error uploading search file:",
-                  err
-                );
-                // Continue with other files even if one fails
-              }
-            }
-
-            // Upload URLs if any
-            if (urls.length > 0) {
-              try {
-                console.log(`[AddEvidencePage] Uploading ${urls.length} URLs`);
-                await api.createUrlEvidence(formId, urls, "remove");
-              } catch (err) {
-                console.error("[AddEvidencePage] Error uploading URLs:", err);
-              }
-            }
-
-            // Upload keywords if any
-            if (textKeywords.length > 0) {
-              try {
-                console.log(
-                  `[AddEvidencePage] Uploading ${textKeywords.length} keywords`
-                );
-                await api.createTextEvidence(formId, textKeywords, "search");
-              } catch (err) {
-                console.error(
-                  "[AddEvidencePage] Error uploading keywords:",
-                  err
-                );
-              }
-            }
-          } else {
-            const errorMsg =
-              "[AddEvidencePage] No formId available, skipping file uploads. Files will not be saved to backend.";
-            console.warn(errorMsg);
-            // Show error to user
-            if (removeFiles.length > 0 || searchFiles.length > 0) {
-              alert(
-                "Warning: Form ID not available. Files were not uploaded to the server. Please go back and try again."
+        onNext={() =>
+          void (async () => {
+            // Upload files if formId is available
+            if (formId) {
+              console.log(
+                `[AddEvidencePage] Uploading files for form ${formId}`
               );
+              console.log(
+                `[AddEvidencePage] Remove files: ${removeFiles.length}, Search files: ${searchFiles.length}`
+              );
+
+              // Upload remove files
+              for (const uploadedFile of removeFiles) {
+                try {
+                  console.log(
+                    `[AddEvidencePage] Uploading remove file: ${uploadedFile.file.name}`
+                  );
+                  await api.uploadEvidenceFile(
+                    formId,
+                    uploadedFile.file,
+                    "remove"
+                  );
+                  console.log(
+                    `[AddEvidencePage] Successfully uploaded remove file`
+                  );
+                } catch (err) {
+                  console.error(
+                    "[AddEvidencePage] Error uploading remove file:",
+                    err
+                  );
+                  // Continue with other files even if one fails
+                }
+              }
+
+              // Upload search files
+              for (const uploadedFile of searchFiles) {
+                try {
+                  console.log(
+                    `[AddEvidencePage] Uploading search file: ${uploadedFile.file.name}`
+                  );
+                  await api.uploadEvidenceFile(
+                    formId,
+                    uploadedFile.file,
+                    "search"
+                  );
+                  console.log(
+                    `[AddEvidencePage] Successfully uploaded search file`
+                  );
+                } catch (err) {
+                  console.error(
+                    "[AddEvidencePage] Error uploading search file:",
+                    err
+                  );
+                  // Continue with other files even if one fails
+                }
+              }
+
+              // Upload URLs if any
+              if (urls.length > 0) {
+                try {
+                  console.log(
+                    `[AddEvidencePage] Uploading ${urls.length} URLs`
+                  );
+                  await api.createUrlEvidence(formId, urls, "remove");
+                } catch (err) {
+                  console.error("[AddEvidencePage] Error uploading URLs:", err);
+                }
+              }
+
+              // Upload keywords if any
+              if (textKeywords.length > 0) {
+                try {
+                  console.log(
+                    `[AddEvidencePage] Uploading ${textKeywords.length} keywords`
+                  );
+                  await api.createTextEvidence(formId, textKeywords, "search");
+                } catch (err) {
+                  console.error(
+                    "[AddEvidencePage] Error uploading keywords:",
+                    err
+                  );
+                }
+              }
+            } else {
+              const errorMsg =
+                "[AddEvidencePage] No formId available, skipping file uploads. Files will not be saved to backend.";
+              console.warn(errorMsg);
+              // Show error to user
+              if (removeFiles.length > 0 || searchFiles.length > 0) {
+                alert(
+                  "Warning: Form ID not available. Files were not uploaded to the server. Please go back and try again."
+                );
+              }
             }
-          }
 
-          // Save file metadata (not File objects, which can't be serialized)
-          const removeFilesMetadata = removeFiles.map((f) => ({
-            id: f.id,
-            name: f.file.name,
-            size: f.file.size,
-            type: f.file.type,
-            lastModified: f.file.lastModified,
-            action_type: "remove" as const,
-          }));
-          const searchFilesMetadata = searchFiles.map((f) => ({
-            id: f.id,
-            name: f.file.name,
-            size: f.file.size,
-            type: f.file.type,
-            lastModified: f.file.lastModified,
-            action_type: "search" as const,
-          }));
+            // Save file metadata (not File objects, which can't be serialized)
+            const removeFilesMetadata = removeFiles.map((f) => ({
+              id: f.id,
+              name: f.file.name,
+              size: f.file.size,
+              type: f.file.type,
+              lastModified: f.file.lastModified,
+              action_type: "remove" as const,
+            }));
+            const searchFilesMetadata = searchFiles.map((f) => ({
+              id: f.id,
+              name: f.file.name,
+              size: f.file.size,
+              type: f.file.type,
+              lastModified: f.file.lastModified,
+              action_type: "search" as const,
+            }));
 
-          onNext({
-            evidence_type: activeTab,
-            remove_files: removeFilesMetadata,
-            search_files: searchFilesMetadata,
-            remove_files_count: removeFiles.length,
-            search_files_count: searchFiles.length,
-            text_keywords: textKeywords,
-            urls: urls,
-          });
-        })()}
+            onNext({
+              evidence_type: activeTab,
+              remove_files: removeFilesMetadata,
+              search_files: searchFilesMetadata,
+              remove_files_count: removeFiles.length,
+              search_files_count: searchFiles.length,
+              text_keywords: textKeywords,
+              urls: urls,
+            });
+          })()
+        }
         isLoading={isLoading}
       />
     </FormContainer>
