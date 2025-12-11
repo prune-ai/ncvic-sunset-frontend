@@ -16,7 +16,7 @@ import { useCallback } from "react";
  */
 export function useSetHandler<T extends string>(
   set: Set<T>,
-  setSet: (newSet: Set<T>) => void,
+  setSet: (newSet: Set<T>) => void
 ) {
   return useCallback(
     (value: T) => (checked: boolean) => {
@@ -28,7 +28,6 @@ export function useSetHandler<T extends string>(
       }
       setSet(newSet);
     },
-    [set, setSet],
+    [set, setSet]
   );
 }
-

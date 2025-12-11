@@ -41,19 +41,19 @@ export function AddEvidencePage({
   formId,
 }: AddEvidencePageProps) {
   const [activeTab, setActiveTab] = useState<"images" | "urls" | "text">(
-    (initialData?.evidence_type as "images" | "urls" | "text") || "images",
+    (initialData?.evidence_type as "images" | "urls" | "text") || "images"
   );
   const [removeFiles, setRemoveFiles] = useState<UploadedFile[]>(
-    evidenceFiles.removeFiles || [],
+    evidenceFiles.removeFiles || []
   );
   const [searchFiles, setSearchFiles] = useState<UploadedFile[]>(
-    evidenceFiles.searchFiles || [],
+    evidenceFiles.searchFiles || []
   );
   const [textKeywords, setTextKeywords] = useState<string[]>(
-    (initialData?.text_keywords as string[]) || [],
+    (initialData?.text_keywords as string[]) || []
   );
   const [urls, setUrls] = useState<string[]>(
-    (initialData?.urls as string[]) || [],
+    (initialData?.urls as string[]) || []
   );
 
   // Sync local file state with parent state
@@ -158,12 +158,12 @@ export function AddEvidencePage({
             <div className="flex flex-col gap-3 w-full">
               <div className="flex flex-col gap-3 w-full">
                 <h3 className="text-lg font-semibold leading-[1.25] text-white whitespace-pre-wrap">
-                  Add keywords you've used to find your content on search engines
-                  or specific platforms.
+                  Add keywords you've used to find your content on search
+                  engines or specific platforms.
                 </h3>
                 <p className="text-xs font-normal leading-[1.25] text-zinc-200 whitespace-pre-wrap">
-                  If your images and videos are associated with a known group, or
-                  are part of a known series, or you they are being shared on
+                  If your images and videos are associated with a known group,
+                  or are part of a known series, or you they are being shared on
                   specific types of sites, any text you can provide will greatly
                   increase our chances of finding and removing your content.
                   <br />
@@ -188,16 +188,29 @@ export function AddEvidencePage({
           // Upload files if formId is available
           if (formId) {
             console.log(`[AddEvidencePage] Uploading files for form ${formId}`);
-            console.log(`[AddEvidencePage] Remove files: ${removeFiles.length}, Search files: ${searchFiles.length}`);
+            console.log(
+              `[AddEvidencePage] Remove files: ${removeFiles.length}, Search files: ${searchFiles.length}`
+            );
 
             // Upload remove files
             for (const uploadedFile of removeFiles) {
               try {
-                console.log(`[AddEvidencePage] Uploading remove file: ${uploadedFile.file.name}`);
-                await api.uploadEvidenceFile(formId, uploadedFile.file, "remove");
-                console.log(`[AddEvidencePage] Successfully uploaded remove file`);
+                console.log(
+                  `[AddEvidencePage] Uploading remove file: ${uploadedFile.file.name}`
+                );
+                await api.uploadEvidenceFile(
+                  formId,
+                  uploadedFile.file,
+                  "remove"
+                );
+                console.log(
+                  `[AddEvidencePage] Successfully uploaded remove file`
+                );
               } catch (err) {
-                console.error("[AddEvidencePage] Error uploading remove file:", err);
+                console.error(
+                  "[AddEvidencePage] Error uploading remove file:",
+                  err
+                );
                 // Continue with other files even if one fails
               }
             }
@@ -205,11 +218,22 @@ export function AddEvidencePage({
             // Upload search files
             for (const uploadedFile of searchFiles) {
               try {
-                console.log(`[AddEvidencePage] Uploading search file: ${uploadedFile.file.name}`);
-                await api.uploadEvidenceFile(formId, uploadedFile.file, "search");
-                console.log(`[AddEvidencePage] Successfully uploaded search file`);
+                console.log(
+                  `[AddEvidencePage] Uploading search file: ${uploadedFile.file.name}`
+                );
+                await api.uploadEvidenceFile(
+                  formId,
+                  uploadedFile.file,
+                  "search"
+                );
+                console.log(
+                  `[AddEvidencePage] Successfully uploaded search file`
+                );
               } catch (err) {
-                console.error("[AddEvidencePage] Error uploading search file:", err);
+                console.error(
+                  "[AddEvidencePage] Error uploading search file:",
+                  err
+                );
                 // Continue with other files even if one fails
               }
             }
@@ -227,18 +251,26 @@ export function AddEvidencePage({
             // Upload keywords if any
             if (textKeywords.length > 0) {
               try {
-                console.log(`[AddEvidencePage] Uploading ${textKeywords.length} keywords`);
+                console.log(
+                  `[AddEvidencePage] Uploading ${textKeywords.length} keywords`
+                );
                 await api.createTextEvidence(formId, textKeywords, "search");
               } catch (err) {
-                console.error("[AddEvidencePage] Error uploading keywords:", err);
+                console.error(
+                  "[AddEvidencePage] Error uploading keywords:",
+                  err
+                );
               }
             }
           } else {
-            const errorMsg = "[AddEvidencePage] No formId available, skipping file uploads. Files will not be saved to backend.";
+            const errorMsg =
+              "[AddEvidencePage] No formId available, skipping file uploads. Files will not be saved to backend.";
             console.warn(errorMsg);
             // Show error to user
             if (removeFiles.length > 0 || searchFiles.length > 0) {
-              alert("Warning: Form ID not available. Files were not uploaded to the server. Please go back and try again.");
+              alert(
+                "Warning: Form ID not available. Files were not uploaded to the server. Please go back and try again."
+              );
             }
           }
 

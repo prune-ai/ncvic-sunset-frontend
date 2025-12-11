@@ -39,4 +39,3 @@ export function Pill({ text, onDelete }: PillProps) {
     </div>
   );
 }
-

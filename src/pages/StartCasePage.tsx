@@ -24,25 +24,29 @@ export function StartCasePage({
   initialData,
 }: StartCasePageProps) {
   const [over18, setOver18] = useState<string | null>(
-    initialData?.over_18 === true ? "yes" : initialData?.over_18 === false ? "no" : null,
+    initialData?.over_18 === true
+      ? "yes"
+      : initialData?.over_18 === false
+        ? "no"
+        : null
   );
   const [ageInContent, setAgeInContent] = useState<string>(
-    (initialData?.age_in_content as string) || "",
+    (initialData?.age_in_content as string) || ""
   );
   const [reportingFor, setReportingFor] = useState<Set<string>>(
-    new Set((initialData?.reporting_for as string[]) || []),
+    new Set((initialData?.reporting_for as string[]) || [])
   );
   const [sexualContent, setSexualContent] = useState<Set<string>>(
-    new Set((initialData?.sexual_content as string[]) || []),
+    new Set((initialData?.sexual_content as string[]) || [])
   );
   const [otherSexualHarm, setOtherSexualHarm] = useState<string>(
-    (initialData?.other_sexual_harm as string) || "",
+    (initialData?.other_sexual_harm as string) || ""
   );
 
   const handleReportingForChange = useSetHandler(reportingFor, setReportingFor);
   const handleSexualContentChange = useSetHandler(
     sexualContent,
-    setSexualContent,
+    setSexualContent
   );
 
   return (
@@ -190,9 +194,7 @@ export function StartCasePage({
         }}
         isLoading={isLoading}
         disabled={
-          !ageInContent ||
-          reportingFor.size === 0 ||
-          sexualContent.size === 0
+          !ageInContent || reportingFor.size === 0 || sexualContent.size === 0
         }
       />
     </FormContainer>
