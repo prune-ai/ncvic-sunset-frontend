@@ -1,14 +1,15 @@
 import { useState } from "react";
+
 import { PageLayout } from "./components/layout/PageLayout";
-import { LandingPage } from "./pages/LandingPage";
-import { StartCasePage } from "./pages/StartCasePage";
-import { WhatHappenedPage } from "./pages/WhatHappenedPage";
-import { AddEvidencePage } from "./pages/AddEvidencePage";
-import { ContactInfoPage } from "./pages/ContactInfoPage";
-import { ConsentsPage } from "./pages/ConsentsPage";
-import { SuccessPage } from "./pages/SuccessPage";
 import { ConfirmModal } from "./components/ui/ConfirmModal";
 import { api, ApiClientError } from "./lib/api";
+import { AddEvidencePage } from "./pages/AddEvidencePage";
+import { ConsentsPage } from "./pages/ConsentsPage";
+import { ContactInfoPage } from "./pages/ContactInfoPage";
+import { LandingPage } from "./pages/LandingPage";
+import { StartCasePage } from "./pages/StartCasePage";
+import { SuccessPage } from "./pages/SuccessPage";
+import { WhatHappenedPage } from "./pages/WhatHappenedPage";
 
 function App() {
   const [currentPage, setCurrentPage] = useState(0); // 0 = landing page
