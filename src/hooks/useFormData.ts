@@ -32,4 +32,3 @@ export function useFormData<T extends FormData>(initialData: T) {
     resetForm,
   };
 }
-

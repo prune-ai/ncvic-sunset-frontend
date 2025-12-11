@@ -21,11 +21,12 @@ export function ConsentsPage({
   error,
   initialData,
 }: ConsentsPageProps) {
-  const savedConsents = (initialData?.consents as {
-    accurate_info?: boolean;
-    hashing_analysis?: boolean;
-    takedown_requests?: boolean;
-  }) || {};
+  const savedConsents =
+    (initialData?.consents as {
+      accurate_info?: boolean;
+      hashing_analysis?: boolean;
+      takedown_requests?: boolean;
+    }) || {};
   const [consents, setConsents] = useState({
     accurateInfo: savedConsents.accurate_info || false,
     hashingAnalysis: savedConsents.hashing_analysis || false,

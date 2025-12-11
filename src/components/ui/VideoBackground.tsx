@@ -23,7 +23,7 @@ export function VideoBackground({
   useEffect(() => {
     // Check if user prefers reduced motion
     const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
+      "(prefers-reduced-motion: reduce)"
     ).matches;
 
     if (prefersReducedMotion) {
@@ -89,16 +89,11 @@ export function VideoBackground({
           aria-hidden="true"
         >
           {/* Prefer WebM (smaller) if available, then MP4 (better compatibility), fallback to original */}
-          {videoSrcWebM && (
-            <source src={videoSrcWebM} type="video/webm" />
-          )}
-          {videoSrcMP4 && (
-            <source src={videoSrcMP4} type="video/mp4" />
-          )}
+          {videoSrcWebM && <source src={videoSrcWebM} type="video/webm" />}
+          {videoSrcMP4 && <source src={videoSrcMP4} type="video/mp4" />}
           <source src={videoSrc} type="video/quicktime" />
         </video>
       )}
     </div>
   );
 }
-

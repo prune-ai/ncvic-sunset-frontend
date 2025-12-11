@@ -23,25 +23,22 @@ export function WhatHappenedPage({
   initialData,
 }: WhatHappenedPageProps) {
   const [whatHappened, setWhatHappened] = useState<Set<string>>(
-    new Set((initialData?.what_happened as string[]) || []),
+    new Set((initialData?.what_happened as string[]) || [])
   );
   const [federalCaseDescription, setFederalCaseDescription] = useState<string>(
-    (initialData?.federal_case_description as string) || "",
+    (initialData?.federal_case_description as string) || ""
   );
   const [otherWhatHappened, setOtherWhatHappened] = useState<string>(
-    (initialData?.other_what_happened as string) || "",
+    (initialData?.other_what_happened as string) || ""
   );
   const [knowsWhoPosted, setKnowsWhoPosted] = useState<string | null>(
-    (initialData?.knows_who_posted as string) || null,
+    (initialData?.knows_who_posted as string) || null
   );
   const [whoPosted, setWhoPosted] = useState<Set<string>>(
-    new Set((initialData?.who_posted as string[]) || []),
+    new Set((initialData?.who_posted as string[]) || [])
   );
 
-  const handleWhatHappenedChange = useSetHandler(
-    whatHappened,
-    setWhatHappened,
-  );
+  const handleWhatHappenedChange = useSetHandler(whatHappened, setWhatHappened);
   const handleWhoPostedChange = useSetHandler(whoPosted, setWhoPosted);
 
   return (
@@ -183,8 +180,7 @@ export function WhatHappenedPage({
             federal_case_description: federalCaseDescription || null,
             other_what_happened: otherWhatHappened || null,
             knows_who_posted: knowsWhoPosted,
-            who_posted:
-              knowsWhoPosted === "yes" ? Array.from(whoPosted) : null,
+            who_posted: knowsWhoPosted === "yes" ? Array.from(whoPosted) : null,
           });
         }}
         isLoading={isLoading}

@@ -18,7 +18,9 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
   // Store form data for each page to restore on back navigation
-  const [savedPageData, setSavedPageData] = useState<Record<number, Record<string, unknown>>>({});
+  const [savedPageData, setSavedPageData] = useState<
+    Record<number, Record<string, unknown>>
+  >({});
   // Store File objects separately for page 3 (evidence) since they can't be serialized
   const [evidenceFiles, setEvidenceFiles] = useState<{
     removeFiles: Array<{ id: string; file: File; preview: string }>;
@@ -54,7 +56,11 @@ function App() {
         }));
 
         // For page 3 (evidence), also update evidence files if metadata exists
-        if (currentPage === 3 && pageData.remove_files && pageData.search_files) {
+        if (
+          currentPage === 3 &&
+          pageData.remove_files &&
+          pageData.search_files
+        ) {
           // Files are already stored in evidenceFiles state, so we don't need to restore them
           // The metadata is saved for reference, but File objects persist in state
         }
@@ -73,7 +79,7 @@ function App() {
       } else if (formId && pageData && currentPage >= 2) {
         // Note: File uploads for page 3 are handled directly in AddEvidencePage
         // before onNext is called, so we don't need to handle them here
-        
+
         // Save page data for pages 2-5
         await api.savePage(formId, currentPage, pageData);
       }

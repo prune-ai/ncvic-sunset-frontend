@@ -114,13 +114,7 @@ export const SearchIcon = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <circle
-      cx="7"
-      cy="7"
-      r="4.5"
-      stroke="white"
-      strokeWidth="1.5"
-    />
+    <circle cx="7" cy="7" r="4.5" stroke="white" strokeWidth="1.5" />
     <path
       d="M10.5 10.5L13 13"
       stroke="white"
@@ -148,4 +142,3 @@ export const ImageUploadIcon = () => (
     />
   </svg>
 );
-

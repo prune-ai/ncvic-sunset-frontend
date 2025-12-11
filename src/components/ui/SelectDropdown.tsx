@@ -77,7 +77,7 @@ export function SelectDropdown({
 
   // Filter options based on search query
   const filteredOptions = options.filter((option) =>
-    option.toLowerCase().includes(searchQuery.toLowerCase()),
+    option.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -130,7 +130,7 @@ export function SelectDropdown({
 
   const handleOptionSelect = (
     e: React.MouseEvent | React.KeyboardEvent,
-    option: string,
+    option: string
   ) => {
     if (e.type === "mousedown") {
       e.preventDefault(); // Prevent text selection
@@ -200,4 +200,3 @@ export function SelectDropdown({
     </div>
   );
 }
-

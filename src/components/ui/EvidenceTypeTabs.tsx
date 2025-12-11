@@ -9,7 +9,7 @@ export function EvidenceTypeTabs({
 }: EvidenceTypeTabsProps) {
   const handleInteraction = (
     e: React.MouseEvent | React.KeyboardEvent,
-    tab: "images" | "urls" | "text",
+    tab: "images" | "urls" | "text"
   ) => {
     if (e.type === "mousedown") {
       e.preventDefault();
@@ -50,4 +50,3 @@ export function EvidenceTypeTabs({
     </div>
   );
 }
-

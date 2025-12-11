@@ -12,7 +12,7 @@ interface ButtonGroupProps {
 export function ButtonGroup({ options, value, onChange }: ButtonGroupProps) {
   const handleInteraction = (
     e: React.MouseEvent | React.KeyboardEvent,
-    optionValue: string,
+    optionValue: string
   ) => {
     if (e.type === "mousedown") {
       e.preventDefault(); // Prevent text selection

@@ -25,20 +25,23 @@ export function ContactInfoPage({
   error,
   initialData,
 }: ContactInfoPageProps) {
-  const savedUserLocation = (initialData?.user_location as {
-    country?: string;
-    state?: string;
-    zipCode?: string;
-  }) || {};
-  const savedPerpetratorLocation = (initialData?.perpetrator_location as {
-    country?: string;
-    state?: string;
-    zipCode?: string;
-  }) || {};
-  const savedContactInfo = (initialData?.contact_info as {
-    email?: string;
-    phone?: string;
-  }) || {};
+  const savedUserLocation =
+    (initialData?.user_location as {
+      country?: string;
+      state?: string;
+      zipCode?: string;
+    }) || {};
+  const savedPerpetratorLocation =
+    (initialData?.perpetrator_location as {
+      country?: string;
+      state?: string;
+      zipCode?: string;
+    }) || {};
+  const savedContactInfo =
+    (initialData?.contact_info as {
+      email?: string;
+      phone?: string;
+    }) || {};
 
   const [userLocation, setUserLocation] = useState({
     country: savedUserLocation.country || "United States",
@@ -86,12 +89,10 @@ export function ContactInfoPage({
   const [identityPreference, setIdentityPreference] = useState<
     "anonymous" | "provideName" | null
   >((initialData?.identity_preference as "anonymous" | "provideName") || null);
-  const [name, setName] = useState(
-    (initialData?.name as string) || "",
-  );
+  const [name, setName] = useState((initialData?.name as string) || "");
   const handleNotificationChange = useSetHandler(
     notificationPreferences,
-    setNotificationPreferences,
+    setNotificationPreferences
   );
 
   return (
@@ -108,7 +109,12 @@ export function ContactInfoPage({
               options={COUNTRIES}
               value={userLocation.country}
               onChange={(country) =>
-                setUserLocation({ ...userLocation, country, state: "", zipCode: "" })
+                setUserLocation({
+                  ...userLocation,
+                  country,
+                  state: "",
+                  zipCode: "",
+                })
               }
               placeholder="Countries and Regions"
               defaultValue="United States"
@@ -118,7 +124,9 @@ export function ContactInfoPage({
                 <SelectDropdown
                   options={US_STATES}
                   value={userLocation.state}
-                  onChange={(state) => setUserLocation({ ...userLocation, state })}
+                  onChange={(state) =>
+                    setUserLocation({ ...userLocation, state })
+                  }
                   placeholder="State"
                 />
                 <input
@@ -126,7 +134,10 @@ export function ContactInfoPage({
                   placeholder="Zip code"
                   value={userLocation.zipCode}
                   onChange={(e) =>
-                    setUserLocation({ ...userLocation, zipCode: e.target.value })
+                    setUserLocation({
+                      ...userLocation,
+                      zipCode: e.target.value,
+                    })
                   }
                   className="flex-1 bg-gray-900/20 px-3 py-3 rounded-lg text-xs font-medium text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#b894ee]"
                 />
@@ -264,30 +275,30 @@ export function ContactInfoPage({
         {/* Who are you? */}
         <div className="flex flex-col gap-3 lg:gap-[16px] w-full">
           <SectionHeader title="Who are you?" />
-            <div className="flex flex-col gap-2 w-full">
-              <RadioOption
-                label="I prefer to remain anonymous for now."
-                value="anonymous"
-                selected={identityPreference === "anonymous"}
-                onChange={(value) =>
-                  setIdentityPreference(value as "anonymous" | "provideName")
-                }
-                name="identityPreference"
-              />
-              <RadioOption
-                label="I am comfortable providing my name."
-                value="provideName"
-                selected={identityPreference === "provideName"}
-                onChange={(value) =>
-                  setIdentityPreference(value as "anonymous" | "provideName")
-                }
-                name="identityPreference"
-                showInput={true}
-                inputValue={name}
-                onInputChange={setName}
-                inputPlaceholder="Type here"
-              />
-            </div>
+          <div className="flex flex-col gap-2 w-full">
+            <RadioOption
+              label="I prefer to remain anonymous for now."
+              value="anonymous"
+              selected={identityPreference === "anonymous"}
+              onChange={(value) =>
+                setIdentityPreference(value as "anonymous" | "provideName")
+              }
+              name="identityPreference"
+            />
+            <RadioOption
+              label="I am comfortable providing my name."
+              value="provideName"
+              selected={identityPreference === "provideName"}
+              onChange={(value) =>
+                setIdentityPreference(value as "anonymous" | "provideName")
+              }
+              name="identityPreference"
+              showInput={true}
+              inputValue={name}
+              onInputChange={setName}
+              inputPlaceholder="Type here"
+            />
+          </div>
         </div>
       </div>
 
@@ -298,23 +309,23 @@ export function ContactInfoPage({
         onNext={() => {
           // Validate on submit attempt
           setHasAttemptedSubmit(true);
-          
+
           const emailValid = validateEmail(contactInfo.email);
           const phoneValid = validatePhone(contactInfo.phone);
-          
+
           // Set errors if validation fails
           if (contactInfo.email.trim() && !emailValid) {
             setEmailError("Please enter a valid email address");
           } else {
             setEmailError(null);
           }
-          
+
           if (contactInfo.phone.trim() && !phoneValid) {
             setPhoneError("Phone number must be at least 10 digits");
           } else {
             setPhoneError(null);
           }
-          
+
           // Don't proceed if validation fails
           if (
             (contactInfo.email.trim() && !emailValid) ||
@@ -322,7 +333,7 @@ export function ContactInfoPage({
           ) {
             return;
           }
-          
+
           // Normalize phone number before sending
           const normalizedContactInfo = {
             ...contactInfo,

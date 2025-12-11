@@ -12,10 +12,7 @@ export function LandingPage({ onStartCase, onLearnMore }: LandingPageProps) {
     <div className="relative w-full h-screen overflow-hidden">
       {/* Background video */}
       <div className="absolute inset-0 -left-[596px] w-[2632px] h-[1755px]">
-        <VideoBackground
-          videoSrc="/cloudsloop.mov"
-          posterSrc="/clouds.png"
-        />
+        <VideoBackground videoSrc="/cloudsloop.mov" posterSrc="/clouds.png" />
       </div>
 
       {/* Header with hamburger menu */}

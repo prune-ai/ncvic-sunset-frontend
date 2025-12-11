@@ -42,10 +42,13 @@ export function PageLayout({
           <FooterLink>Terms</FooterLink>
           <FooterLink>Main Site</FooterLink>
           {onStartOver && (
-            <FooterLink href="#" onClick={(e) => {
-              e.preventDefault();
-              onStartOver();
-            }}>
+            <FooterLink
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                onStartOver();
+              }}
+            >
               Start Over
             </FooterLink>
           )}

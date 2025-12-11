@@ -23,7 +23,11 @@ export function TextUploadArea({
         onKeywordsChange([...keywords, trimmedValue]);
         setInputValue("");
       }
-    } else if (e.key === "Backspace" && inputValue === "" && keywords.length > 0) {
+    } else if (
+      e.key === "Backspace" &&
+      inputValue === "" &&
+      keywords.length > 0
+    ) {
       // Remove last keyword if backspace is pressed on empty input
       onKeywordsChange(keywords.slice(0, -1));
     }
@@ -63,4 +67,3 @@ export function TextUploadArea({
     </div>
   );
 }
-

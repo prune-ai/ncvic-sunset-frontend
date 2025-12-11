@@ -257,4 +257,3 @@ export const COUNTRIES = [
   "Zambia",
   "Zimbabwe",
 ];
-

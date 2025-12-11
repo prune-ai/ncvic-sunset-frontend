@@ -28,14 +28,15 @@ async function handleResponse<T>(response: Response): Promise<T> {
     let errorDetail: string;
     try {
       const errorData = await response.json();
-      errorDetail = errorData.detail || errorData.message || response.statusText;
+      errorDetail =
+        errorData.detail || errorData.message || response.statusText;
     } catch {
       errorDetail = response.statusText;
     }
     throw new ApiClientError(
       `API request failed: ${errorDetail}`,
       response.status,
-      errorDetail,
+      errorDetail
     );
   }
 
@@ -105,7 +106,7 @@ export const api = {
   async savePage(
     formId: string,
     pageNumber: number,
-    pageData: Record<string, unknown>,
+    pageData: Record<string, unknown>
   ): Promise<IntakeFormResponse> {
     const response = await fetch(
       `${API_BASE_URL}/api/intake/${formId}/page/${pageNumber}`,
@@ -118,7 +119,7 @@ export const api = {
           page_number: pageNumber,
           page_data: pageData,
         }),
-      },
+      }
     );
 
     return handleResponse<IntakeFormResponse>(response);
@@ -144,7 +145,7 @@ export const api = {
         headers: {
           "Content-Type": "application/json",
         },
-      },
+      }
     );
 
     return handleResponse<SubmitIntakeResponse>(response);
@@ -156,7 +157,7 @@ export const api = {
   async uploadEvidenceFile(
     formId: string,
     file: File,
-    actionType: "remove" | "search",
+    actionType: "remove" | "search"
   ): Promise<EvidenceResponse> {
     const formData = new FormData();
     formData.append("file", file);
@@ -167,7 +168,7 @@ export const api = {
       {
         method: "POST",
         body: formData,
-      },
+      }
     );
 
     return handleResponse<EvidenceResponse>(response);
@@ -179,7 +180,7 @@ export const api = {
   async createUrlEvidence(
     formId: string,
     urls: string[],
-    actionType: "remove" | "search" = "remove",
+    actionType: "remove" | "search" = "remove"
   ): Promise<EvidenceResponse[]> {
     const response = await fetch(
       `${API_BASE_URL}/api/intake/${formId}/evidence/urls`,
@@ -192,7 +193,7 @@ export const api = {
           urls,
           action_type: actionType,
         }),
-      },
+      }
     );
 
     return handleResponse<EvidenceResponse[]>(response);
@@ -204,7 +205,7 @@ export const api = {
   async createTextEvidence(
     formId: string,
     keywords: string[],
-    actionType: "remove" | "search" = "search",
+    actionType: "remove" | "search" = "search"
   ): Promise<EvidenceResponse[]> {
     const response = await fetch(
       `${API_BASE_URL}/api/intake/${formId}/evidence/text`,
@@ -217,10 +218,9 @@ export const api = {
           keywords,
           action_type: actionType,
         }),
-      },
+      }
     );
 
     return handleResponse<EvidenceResponse[]>(response);
   },
 };
-
