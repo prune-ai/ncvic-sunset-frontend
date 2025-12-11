@@ -7,7 +7,7 @@ import { CheckboxOption } from "../components/ui/CheckboxOption";
 import { ErrorMessage } from "../components/ui/ErrorMessage";
 import { RadioOption } from "../components/ui/RadioOption";
 import { SectionHeader } from "../components/ui/SectionHeader";
-import { useSetHandler } from "../hooks/useSetHandler";
+import { useSetHandler } from "../hooks/use-set-handler";
 
 interface StartCasePageProps {
   onBack: () => void;

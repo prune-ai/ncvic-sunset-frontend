@@ -3,8 +3,8 @@
  */
 
 // Use environment variable if set, otherwise default to production
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
+const API_BASE_URL: string =
+  (import.meta.env.VITE_API_BASE_URL as string | undefined) ||
   "https://nc-aa1a0762ed8b46afb47bd598909d279e.ecs.us-west-2.on.aws";
 
 export interface ApiError {
@@ -27,9 +27,9 @@ async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
     let errorDetail: string;
     try {
-      const errorData = await response.json();
+      const errorData = (await response.json()) as ApiError;
       errorDetail =
-        errorData.detail || errorData.message || response.statusText;
+        errorData.detail || (errorData as { message?: string }).message || response.statusText;
     } catch {
       errorDetail = response.statusText;
     }
@@ -46,7 +46,7 @@ async function handleResponse<T>(response: Response): Promise<T> {
     return {} as T;
   }
 
-  return response.json();
+  return response.json() as Promise<T>;
 }
 
 export interface StartIntakeRequest {
